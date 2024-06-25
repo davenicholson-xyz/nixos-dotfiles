@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# ENVORINMNENT VARIABLES
+# ----------------------
+# WALLHAVEN_API - API key from wallhaven.cc
+# WALLHAVEN_USER - Username from wallhaven.cc
+
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
+COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$1" '.data[] | select(.label == $LABEL) | .id')
+
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
+PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+
+> images.txt
+
+for ((i=1; i<=$PAGES; i++)); do
+    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >> images.txt
+done
+
+if [ ! -d "$1" ]; then
+    mkdir -p "$1"
+fi
+
+while read p; do
+    curl -o "$1/$(basename $p)" "$p"
+    # wget -P $1 $p
+done < images.txt
+

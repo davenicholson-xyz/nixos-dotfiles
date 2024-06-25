@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# ENVORINMNENT VARIABLES
+# ----------------------
+# WALLHAVEN_API - API key from wallhaven.cc
+# WALLHAVEN_USER - Username from wallhaven.cc
+#
+
+CATEGORIES="101"
+PURITY="111"
+
+if [ -z "$1" ]; then
+	QUERY=$(echo "" | rofi -dmenu -p "What's your poison?")
+else
+	QUERY=$1
+fi
+
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/search?q=$QUERY&page=1&ratios=16x9&sorting=random&seed=$RANDOM&categories=$CATEGORIES&purity=$PURITY&apikey=$WALLHAVEN_API")
+WPAPER=$(echo "$RESULT" | jq -r '.data[1].path')
+echo $RANDOM
+
+curl -o "/home/dave/.wp" "$WPAPER"
+setwallpaper /home/dave/.wp
+# wget -P ".wp" "$RESPONSE"
