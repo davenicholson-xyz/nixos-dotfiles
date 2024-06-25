@@ -45,7 +45,7 @@
 
   # Configure keymap in X11
    services.xserver = {
-    layout = "gb";
+    xkb.layout = "gb";
     #xkbVariant = "";
   };
 
@@ -104,6 +104,9 @@
 	gcc
 	kitty
 	foot
+
+	go
+	nodejs
   ];
 
   programs.zsh.enable = true;
