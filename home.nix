@@ -31,6 +31,11 @@ in {
     ".config/yazi/theme.toml".source = yazi/theme.toml;
   };
 
+  xdg.configFile.nvim = {
+    source = ./nvim;
+    recursive = true;
+  };
+
   home.sessionVariables = {
     EDITOR = "nvim";
     WALLHAVEN_API = "XXMiYVopgEjJlslkFOWxkmbdM1k4nGEi";
@@ -59,6 +64,13 @@ in {
       plugins = [];
       theme = "eastwood";
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
   };
 
   nixpkgs.config.allowUnfree = true;
