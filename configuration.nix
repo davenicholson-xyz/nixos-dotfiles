@@ -100,6 +100,7 @@
   environment.systemPackages = with pkgs; [
 	unzip
 	nerdfonts
+	font-awesome
 	git
 	gcc
 	kitty

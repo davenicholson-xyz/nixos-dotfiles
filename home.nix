@@ -10,23 +10,29 @@ in {
   home.homeDirectory = "/home/dave";
 
   home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
     google-chrome
     swww
+    ags
     jq
     fastfetch
     eza
     yazi
     pywal
-    waybar
     lazygit
+    trash-cli
+    waybar
   ];
 
   home.file = {
     ".config/hypr/hyprland.conf".source = hypr/hyprland.conf;
     ".config/foot/foot.ini".source = foot/foot.ini;
+
     ".config/waybar/waybar.sh".source = waybar/waybar.sh;
+    ".config/waybar/config".source = waybar/config;
+    ".config/waybar/style.css".source = waybar/style.css;
 
     ".config/yazi/yazi.toml".source = yazi/yazi.toml;
     ".config/yazi/keymap.toml".source = yazi/keymap.toml;
