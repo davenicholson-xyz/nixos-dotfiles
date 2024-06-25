@@ -26,8 +26,8 @@ in {
     ".config/foot/foot.ini".source = foot/foot.ini;
     ".config/waybar/waybar.sh".source = waybar/waybar.sh;
 
-    # ".config/yazi/yazi.toml".source = yazi/yazi.toml;
-    # ".config/yazi/keymap.toml".source = yazi/keymap.toml;
+    ".config/yazi/yazi.toml".source = yazi/yazi.toml;
+    ".config/yazi/keymap.toml".source = yazi/keymap.toml;
     ".config/yazi/theme.toml".source = yazi/theme.toml;
   };
 
