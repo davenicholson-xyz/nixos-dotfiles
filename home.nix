@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 let 
   aliases = {
-    ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
+    #ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
+    ls = "eza --long --no-time --group-directories-first --icons";
+    lg = "lazygit";
   };
 in {
   home.username = "dave";

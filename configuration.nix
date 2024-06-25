@@ -44,9 +44,9 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
+   services.xserver = {
     layout = "gb";
-    xkbVariant = "";
+    #xkbVariant = "";
   };
 
   # Configure console keymap
@@ -85,7 +85,7 @@
   };
 
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
   };
 
   # Allow unfree packages
@@ -102,6 +102,8 @@
 	nerdfonts
 	git
 	gcc
+	kitty
+	foot
   ];
 
   programs.zsh.enable = true;
