@@ -18,6 +18,7 @@ in {
     yazi
     pywal
     waybar
+    lazygit
   ];
 
   home.file = {
