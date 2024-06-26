@@ -1,11 +1,10 @@
 { 
-	description = "MY first flake";
+	description = "System flake";
 
 	inputs = {
 		nixpkgs.url = "nixpkgs/nixos-unstable";
 		home-manager.url = "github:nix-community/home-manager/release-23.11";
 		home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
 	};
 
 	outputs = { self, nixpkgs, home-manager, ... }: 

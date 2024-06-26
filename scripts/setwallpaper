@@ -4,3 +4,5 @@
 swww img $1
 # swww img --transition-type=random $1
 wal -i $1
+
+nohup /home/dave/.dotfiles/waybar/launch.sh &

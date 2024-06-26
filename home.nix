@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 let 
   aliases = {
-    ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
-    # ls = "eza --long --no-time --group-directories-first --icons";
+    # ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
+    ls = "eza --long --no-time --group-directories-first --icons";
     lg = "lazygit";
   };
 in {
@@ -29,11 +29,6 @@ in {
   home.file = {
     ".config/hypr/hyprland.conf".source = hypr/hyprland.conf;
     ".config/foot/foot.ini".source = foot/foot.ini;
-
-    ".config/waybar/waybar.sh".source = waybar/waybar.sh;
-    ".config/waybar/config".source = waybar/config;
-    ".config/waybar/style.css".source = waybar/style.css;
-
     ".config/yazi/yazi.toml".source = yazi/yazi.toml;
     ".config/yazi/keymap.toml".source = yazi/keymap.toml;
     ".config/yazi/theme.toml".source = yazi/theme.toml;

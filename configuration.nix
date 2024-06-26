@@ -99,6 +99,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 	unzip
+	killall
 	nerdfonts
 	font-awesome
 	git
