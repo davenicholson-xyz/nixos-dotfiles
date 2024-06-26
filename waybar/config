@@ -5,15 +5,17 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 10,
+    "height": 12,
 
     "include" : ["/home/dave/.dotfiles/waybar/modules.json"],
 
     "modules-left": [
-        "hyprland/workspaces"
+      "hyprland/window"
     ],
 
-    "modules-center": ["hyprland/window"],
+    "modules-center": [
+        "hyprland/workspaces"
+     ],
 
     "modules-right": [
       "clock"
