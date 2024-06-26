@@ -24,6 +24,10 @@ in {
     lazygit
     trash-cli
     waybar
+
+  # Dev bits
+    nodePackages."live-server"
+    hugo
   ];
 
   home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ";
@@ -31,15 +35,17 @@ in {
   home.file = {
     ".config/hypr/hyprland.conf".source = hypr/hyprland.conf;
     ".config/foot/foot.ini".source = foot/foot.ini;
-    ".config/yazi/yazi.toml".source = yazi/yazi.toml;
-    ".config/yazi/keymap.toml".source = yazi/keymap.toml;
-    ".config/yazi/theme.toml".source = yazi/theme.toml;
+    # ".config/yazi/yazi.toml".source = yazi/yazi.toml;
+    # ".config/yazi/keymap.toml".source = yazi/keymap.toml;
+    # ".config/yazi/theme.toml".source = yazi/theme.toml;
   };
 
   xdg.configFile.nvim = {
     source = ./nvim;
     recursive = true;
   };
+
+  xdg.configFile.yazi.source = ./yazi;
 
   home.sessionVariables = {
     EDITOR = "nvim";
