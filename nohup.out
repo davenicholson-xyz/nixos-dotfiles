@@ -1,0 +1,12 @@
+[2024-06-26 18:38:03.236] [info] Using configuration file /home/dave/.dotfiles/waybar/simple/config
+[2024-06-26 18:38:03.236] [info] Including resource file: /home/dave/.dotfiles/waybar/simple/modules.json
+[2024-06-26 18:38:03.239] [info] Unable to receive desktop appearance: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.Settings” on object at path /org/freedesktop/portal/desktop
+[2024-06-26 18:38:03.239] [info] Using CSS file /home/dave/.dotfiles/waybar/simple/style.css
+[2024-06-26 18:38:03.247] [info] Hyprland IPC starting
+[2024-06-26 18:38:03.250] [info] Loading persistent workspaces from Waybar config
+[2024-06-26 18:38:03.250] [info] Loading persistent workspaces from Hyprland workspace rules
+[2024-06-26 18:38:03.376] [warning] Requested height: 12 is less than the minimum height: 23 required by the modules
+[2024-06-26 18:38:03.376] [info] Bar configured (width: 1440, height: 23) for output: Virtual-1
+[2024-06-26 18:38:05.440] [info] Bar configured (width: 1440, height: 22) for output: Virtual-1
+[2024-06-26 18:38:09.960] [warning] Requested height: 22 is less than the minimum height: 23 required by the modules
+[2024-06-26 18:38:09.960] [info] Bar configured (width: 1440, height: 23) for output: Virtual-1

@@ -2,10 +2,10 @@
 
 * {
     font-family: Roboto, Arial, sans-serif;
-    color: @color1;  
     padding: 0;
     margin: 0;
     min-height: 0;
+    color: rgba(0,0,0,0.8);  
 }
 
 window#waybar {
@@ -27,23 +27,22 @@ window#waybar.empty #window {
     margin: 4px 10px 1px 3px;
     padding: 2px 4px;
     border-radius: 4px;
-    color: @color4;
     background: white;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 #taskbar, #window {
     margin: 4px 4px 1px 3px;
-    padding: 1px;
+    padding: 1px 1px 0px 1px;
     border-radius: 4px;
     background: white;
-    opacity: 0.8;
+    opacity: 0.9;
     font-weight: bold;
-    color: @color4;
 }
 
 #taskbar {
     margin-left: 6px;
+    padding-left: 3px;
 }
 
 #taskbar.empty {
@@ -51,7 +50,7 @@ window#waybar.empty #window {
 }
 
 #window {
-    padding-right: 12px;
+    padding: 1px 8px 0px 4px;
 }
 
 #window.empty {
@@ -62,18 +61,15 @@ window#waybar.empty #window {
     margin: 4px 10px 1px 3px;
     padding: 2px 4px;
     border-radius: 8px;
-    color: @foreground;
     background: white;
-    opacity: 0.8;
+    opacity: 0.9;
     font-size: 0px;
 }
 
 #workspaces button {
     font-size: 2px;
-    padding: 0;
     margin: 0 1px;
     border-radius: 15px;
-    border: 0px;
     transition: all 0.3s ease-in-out;
     background: rgba(0,0,0,0.3);
 }
@@ -81,7 +77,7 @@ window#waybar.empty #window {
 #workspaces button.active {
     background: @color4;
     border-radius: 15px;
-    min-width: 40px;
+    min-width: 30px;
     transition: all 0.3s ease-in-out;
 }
 

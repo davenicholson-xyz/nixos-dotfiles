@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # swww img --transition-step=1 --transition-fps=120 $1
-swww img $1
+swww img --transition-step=255 --transition-fps=255 $1
 # swww img --transition-type=random $1
 wal -i $1
 
-nohup /home/dave/.dotfiles/waybar/launch.sh &
+nohup /home/dave/.dotfiles/waybar/launch.sh simple &

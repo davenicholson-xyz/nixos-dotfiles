@@ -7,7 +7,7 @@
     "gtk-layer-shell": true,
     "height": 12,
 
-    "include" : ["/home/dave/.dotfiles/waybar/modules.json"],
+    "include" : ["/home/dave/.dotfiles/waybar/simple/modules.json"],
 
     "modules-left": [
       "wlr/taskbar",
