@@ -1,31 +1,77 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
 * {
-  color: @color1;  
-  padding: 0;
-  margin: 0;
-  min-height: 0;
+    color: @color1;  
+    padding: 0;
+    margin: 0;
+    min-height: 0;
 }
 
 window#waybar {
-  background: transparent;
-  font-size: 12px;
+    background: transparent;
+    font-size: 10px;
+}
+
+window#waybar.empty #window {
+    opacity: 0;
+}
+
+#taskbar.empty {
+    background: transparent;
+    opacity: 0;
+}
+
+#clock {
+    font-weight: bold;
+    margin: 4px 10px 1px 3px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: @color4;
+    background: white;
+    opacity: 0.8;
+}
+
+#taskbar, #window {
+    margin: 4px 4px 1px 3px;
+    padding: 1px;
+    border-radius: 4px;
+    background: white;
+    opacity: 0.8;
+    font-weight: bold;
+    color: @color4;
+}
+
+#taskbar {
+    margin-left: 6px;
+}
+
+#taskbar.empty {
+    opacity: 0;
+}
+
+#window {
+    padding-right: 12px;
+}
+
+#window.empty {
+    opacity: 0;
 }
 
 #workspaces {
     margin: 4px 10px 1px 3px;
     padding: 2px 4px;
-    border-radius: 4px;
+    border-radius: 8px;
     color: @foreground;
     background: white;
     opacity: 0.8;
+    font-size: 0px;
 }
 
 #workspaces button {
     font-size: 2px;
     padding: 0;
     margin: 0 1px;
-    border-radius: 2px;
+    border-radius: 15px;
     border: 0px;
     transition: all 0.3s ease-in-out;
     background: rgba(0,0,0,0.3);
@@ -33,7 +79,7 @@ window#waybar {
 
 #workspaces button.active {
     background: @color4;
-    border-radius: 2px;
+    border-radius: 15px;
     min-width: 40px;
     transition: all 0.3s ease-in-out;
 }
@@ -42,4 +88,5 @@ window#waybar {
     border-radius: 15px;
 }
 
+ 
 
