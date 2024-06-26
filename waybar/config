@@ -5,7 +5,9 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 0,
+    "height": 10,
+
+    "include" : ["/home/dave/.dotfiles/waybar/modules.json"],
 
     "modules-left": [
         "hyprland/workspaces"
@@ -21,11 +23,6 @@
         "format": "{}"
     },
 
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "on-click": "activate",
-        "format": ""
-    },
+
 
 }

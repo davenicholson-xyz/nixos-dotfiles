@@ -1,10 +1,45 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
 * {
-  color: @color11;  
+  color: @color1;  
 }
 
 window#waybar {
   background: transparent;
   font-size: 12px;
 }
+
+#workspaces {
+    margin: 1px 1px 0px 1px;
+    padding: 0px 1px;
+    border-radius: 15px;
+    border: 0px;
+    font-weight: bold;
+    font-style: normal;
+    /* font-size: 10px; */
+    color: @foreground;
+    background: rgba(255,255,255,0.3);
+}
+
+#workspaces button {
+    padding: 0px 2px;
+    margin: 3px 1px;
+    border-radius: 15px;
+    border: 0px;
+    color: @fireground;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @foreground;
+    background: @background;
+    border-radius: 15px;
+    min-width: 40px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    border-radius: 15px;
+}
+
+
