@@ -1,6 +1,7 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
 * {
+    font-family: Roboto, Arial, sans-serif;
     color: @color1;  
     padding: 0;
     margin: 0;
