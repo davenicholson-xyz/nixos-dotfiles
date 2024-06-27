@@ -28,6 +28,7 @@ in {
     lazygit
     trash-cli
     waybar
+    dunst
 
   # Dev bits
     nodePackages."live-server"

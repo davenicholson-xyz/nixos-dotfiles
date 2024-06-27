@@ -7,3 +7,4 @@ wal -i $1
 
 nohup hyprctrl reload >/dev/null 2>&1 &
 nohup /home/dave/.dotfiles/waybar/launch.sh simple >/dev/null 2>&1 &
+nohup /home/dave/.dotfiles/scripts/dunstlauncher >/dev/null 2>&1 &
