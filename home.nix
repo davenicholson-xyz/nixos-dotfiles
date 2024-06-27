@@ -23,6 +23,7 @@ in {
     fastfetch
     eza
     yazi
+    rofi-wayland
     pywal
     lazygit
     trash-cli

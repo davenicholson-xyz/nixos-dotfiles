@@ -1,0 +1,15 @@
+@import "~/.cache/wal/colors-rofi-dark"
+
+configuration {
+  modi: "window,drun,ssh,combi";
+  font: "SauceCodePro Nerd Font 10";
+  combi-modi: "window,drun,ssh";
+  icon-theme: "Papirus";
+  show-icons: true;
+}
+
+window {
+  width: 340px;
+  border-radius: 10px;
+  border: 2px;
+}
