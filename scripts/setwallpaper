@@ -5,4 +5,5 @@ swww img --transition-step=255 --transition-fps=255 $1
 # swww img --transition-type=random $1
 wal -i $1
 
-nohup /home/dave/.dotfiles/waybar/launch.sh simple &
+nohup hyprctrl reload >/dev/null 2>&1 &
+nohup /home/dave/.dotfiles/waybar/launch.sh simple >/dev/null 2>&1 &
