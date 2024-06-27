@@ -6,7 +6,7 @@ let
     lg = "lazygit";
 
     hc = "nvim /home/dave/.dotfiles/home.nix";
-    hs = "home-manager switch --flake /home/dave/.dotfiles";
+    hs = "home-manager switch --flake /home/dave/.dotfiles && hyprctl reload";
   };
 in {
   home.username = "dave";
