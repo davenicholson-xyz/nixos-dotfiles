@@ -111,6 +111,7 @@
       gcc
       kitty
       foot
+      gnome.adwaita-icon-theme
 
       go
       nodejs
