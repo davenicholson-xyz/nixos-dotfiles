@@ -31,7 +31,7 @@ in {
     waybar
     dunst
 
-  # Dev bits
+    # Dev bits
     nodePackages."live-server"
     hugo
   ];
@@ -64,6 +64,8 @@ in {
   home.sessionPath = [
     "/home/dave/.dotfiles/scripts"
   ];
+
+  programs.direnv.enable = true;
 
   programs.git = {
     enable = true;

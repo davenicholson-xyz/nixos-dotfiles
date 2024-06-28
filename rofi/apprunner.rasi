@@ -4,12 +4,14 @@ configuration {
   modi: "window,drun,ssh,combi";
   font: "SauceCodePro Nerd Font 10";
   combi-modi: "window,drun,ssh";
-  icon-theme: "Papirus";
+  icon-theme: "Adiwata";
   show-icons: true;
 }
 
-window {
+#window {
   width: 340px;
   border-radius: 10px;
   border: 2px;
+  border-color: @active-background;
 }
+

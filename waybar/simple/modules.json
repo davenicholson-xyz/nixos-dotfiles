@@ -11,7 +11,7 @@
         },
         "persistent-workspaces": {
             "*": 2
-        }       
+        }
     },
 
     "hyprland/window": {
@@ -36,10 +36,12 @@
             "Foot Server": "Terminal"
         }
     },
+
     "clock": {
         "interval": 60,
-        "format": "{:%H.%M}",
+        "format": "{:%H:%M}",
     },
+
     "custom/date": {
         "exec": "date +'%A %d %B %Y'",
         "interval" : 600,

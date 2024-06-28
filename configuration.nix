@@ -105,19 +105,20 @@
   environment.systemPackages = with pkgs; [
     unzip
     libnotify
-      bash
-      killall
-      nerdfonts
-      font-awesome
-      git
-      gcc
-      kitty
-      foot
-      gnome.adwaita-icon-theme	 
-      expressvpn
+    bash
+    killall
+    nerdfonts
+    font-awesome
+    git
+    gcc
+    kitty
+    foot
+    gnome.adwaita-icon-theme	 
+    expressvpn
 
-      go
-      nodejs
+    direnv
+    go
+    nodejs
   ];
 
   programs.zsh.enable = true;
