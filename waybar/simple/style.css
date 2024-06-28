@@ -22,13 +22,17 @@ window#waybar.empty #window {
     opacity: 0;
 }
 
-#clock {
+#clock, #custom-date {
     font-weight: bold;
     margin: 4px 10px 1px 3px;
     padding: 2px 4px;
     border-radius: 4px;
     background: white;
     opacity: 0.9;
+}
+
+#custom-date {
+    margin-right: 3px;
 }
 
 #taskbar, #window {
@@ -67,7 +71,7 @@ window#waybar.empty #window {
 }
 
 #workspaces button {
-    font-size: 2px;
+    font-size: 0px;
     margin: 0 1px;
     border-radius: 15px;
     transition: all 0.3s ease-in-out;
@@ -83,6 +87,7 @@ window#waybar.empty #window {
 
 #workspaces button:hover {
     border-radius: 15px;
+    border: none;
 }
 
  

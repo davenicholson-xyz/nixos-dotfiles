@@ -13,4 +13,35 @@
             "*": 2
         }       
     },
+
+    "hyprland/window": {
+        "format": "{}",
+        "icon" : true,
+        "icon-size" : 14
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 14,
+        "icon-theme": "Numix-Circle",
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [
+            "Alacritty"
+        ],
+        "app_ids-mapping": {
+        },
+        "rewrite": {
+            "Foot Server": "Terminal"
+        }
+    },
+    "clock": {
+        "interval": 60,
+        "format": "{:%H.%M}",
+    },
+    "custom/date": {
+        "exec": "date +'%A %d %B %Y'",
+        "interval" : 600,
+    }
 }

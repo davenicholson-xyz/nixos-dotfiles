@@ -17,6 +17,7 @@ in {
 
   home.packages = with pkgs; [
     google-chrome
+    cinnamon.nemo
     swww
     ags
     jq

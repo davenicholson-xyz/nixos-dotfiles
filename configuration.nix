@@ -74,6 +74,8 @@
     };
   };
 
+  services.expressvpn.enable = true;
+
 # Hyprland
   programs.hyprland = {
     enable = true;
@@ -111,7 +113,8 @@
       gcc
       kitty
       foot
-      gnome.adwaita-icon-theme
+      gnome.adwaita-icon-theme	 
+      expressvpn
 
       go
       nodejs
