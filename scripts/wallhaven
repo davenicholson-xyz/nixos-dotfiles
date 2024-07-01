@@ -5,8 +5,10 @@
 # WALLHAVEN_API - API key from wallhaven.cc
 # WALLHAVEN_USER - Username from wallhaven.cc
 
+COLLECTION_NAME=$(echo $1 | rev | cut -d"/" -f 1 | rev)
+
 RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
-COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$1" '.data[] | select(.label == $LABEL) | .id')
+COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION_NAME" '.data[] | select(.label == $LABEL) | .id')
 
 RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
 PAGES=$(echo "$RESULT" | jq '.meta.last_page')
@@ -20,6 +22,8 @@ done
 
 if [ ! -d "$1" ]; then
     mkdir -p "$1"
+else
+    rm $1/*
 fi
 
 while read p; do
@@ -27,3 +31,4 @@ while read p; do
     # wget -P $1 $p
 done < images.txt
 
+rm images.txt

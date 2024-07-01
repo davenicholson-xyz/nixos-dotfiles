@@ -3,7 +3,7 @@
         "on-click": "activate",
         "active-only": false,
         "all-outputs": true,
-        "format": ".",
+        "format": "{}",
         "format-icons": {
             "urgent": "",
             "active": "",
@@ -39,11 +39,11 @@
 
     "clock": {
         "interval": 60,
-        "format": "{:%H:%M}",
+        "format": "{:%H:%M}"
     },
 
     "custom/date": {
         "exec": "date +'%A %d %B %Y'",
-        "interval" : 600,
+        "interval" : 600
     }
 }

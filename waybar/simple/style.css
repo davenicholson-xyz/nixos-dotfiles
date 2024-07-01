@@ -17,10 +17,6 @@ window#waybar.empty #window {
     opacity: 0;
 }
 
-#taskbar.empty {
-    background: transparent;
-    opacity: 0;
-}
 
 #clock, #custom-date {
     font-weight: bold;
@@ -50,6 +46,7 @@ window#waybar.empty #window {
 }
 
 #taskbar.empty {
+    background: transparent;
     opacity: 0;
 }
 

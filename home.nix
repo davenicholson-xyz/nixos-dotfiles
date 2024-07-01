@@ -19,6 +19,7 @@ in {
     google-chrome
     cinnamon.nemo
     swww
+    waypaper
     ags
     jq
     fastfetch
@@ -41,6 +42,7 @@ in {
   home.file = {
     ".config/hypr/hyprland.conf".source = hypr/hyprland.conf;
     ".config/foot/foot.ini".source = foot/foot.ini;
+    ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
 
   xdg.configFile.nvim = {
