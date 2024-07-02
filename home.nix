@@ -35,6 +35,9 @@ in {
     # Dev bits
     nodePackages."live-server"
     hugo
+
+    lua-language-server
+    nodePackages.typescript-language-server
   ];
 
   home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ";
@@ -45,10 +48,10 @@ in {
     ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
 
-  xdg.configFile.nvim = {
-    source = ./nvim;
-    recursive = true;
-  };
+  # xdg.configFile.nvim = {
+  #   source = ./nvim;
+  #   recursive = true;
+  # };
 
   xdg.configFile.wal = {
     source = ./wal;
@@ -78,8 +81,9 @@ in {
   programs.zsh = {
     enable = true;
     initExtra = ''
-	cat /home/dave/.cache/wal/sequences
-	fastfetch
+      cat /home/dave/.cache/wal/sequences
+      fastfetch
+      # eval "$(zellij setup --generate-auto-start zsh)"
     '';
     shellAliases = aliases;
     oh-my-zsh = {
@@ -88,6 +92,8 @@ in {
       theme = "eastwood";
     };
   };
+
+  programs.zellij.enable = true;
 
   programs.neovim = {
     enable = true;

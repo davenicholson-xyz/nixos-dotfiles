@@ -113,6 +113,7 @@
     gcc
     kitty
     foot
+    htop
     gnome.adwaita-icon-theme	 
     expressvpn
 
