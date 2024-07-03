@@ -53,11 +53,6 @@ in {
 
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/nvim";
 
-  # xdg.configFile.nvim = {
-  #   source = ./nvim;
-  #   recursive = true;
-  # };
-
   xdg.configFile.wal = {
     source = ./wal;
     recursive = true;

@@ -1,0 +1,96 @@
+@import '/home/dave/.cache/wal/colors-waybar.css';
+
+@define-color bg alpha(@background, 0.9);
+@define-color fg @foreground;
+@define-color alt @color4;
+
+* {
+    font-family: Roboto, Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+    color: @fg;
+}
+
+.modules-left {
+    margin: 0px 0px 0px 8px;
+}
+
+.modules-right {
+    margin: 0px 8px 0px 0px;
+}
+
+.module {
+    
+}
+
+window#waybar {
+    background: transparent;
+    font-size: 12px;
+}
+
+window#waybar.empty #window {
+    opacity: 0;
+}
+
+#clock {
+    background: @bg;
+    font-weight: bold;
+    border-bottom: 4px solid @alt;
+    margin: 2px 0px 0px 1px;
+    padding: 0px 6px;
+    border-radius: 4px;
+}
+
+#taskbar, #window {
+    margin: 4px 4px 1px 3px;
+    padding: 3px 5px;
+    border-radius: 4px;
+    background: @bg;
+    font-weight: bold;
+}
+
+#taskbar {
+    margin-left: 6px;
+    padding-left: 3px;
+}
+
+#taskbar.empty {
+    background: transparent;
+    opacity: 0;
+}
+
+#window {
+    padding: 1px 8px 0px 4px;
+}
+
+#window.empty {
+    opacity: 0;
+}
+
+#workspaces {
+}
+
+#workspaces button {
+    color: @fg;
+    background: @bg;
+    font-size: 18px;
+    margin: 2px 1px 0px 1px;
+    padding: 0px 6px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 4px;
+    border-bottom: 4px solid @bg;
+}
+
+#workspaces button.active {
+    border-bottom: 4px solid @alt;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.empty {
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    border: none;
+}

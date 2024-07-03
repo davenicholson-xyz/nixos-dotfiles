@@ -23,7 +23,7 @@
 # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
 # Enable networking
-    networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true;
 
 # Set your time zone.
   time.timeZone = "Europe/London";
@@ -74,13 +74,22 @@
     };
   };
 
-  services.expressvpn.enable = true;
-
-# Hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
+
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma6.enable = true;
+
+  # services.xserver = {
+  #   enable = true;
+  #   displayManager.gdm.enable = true;
+  #   desktopManager.gnome.enable = true;
+  # };
+
+  services.expressvpn.enable = true;
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";

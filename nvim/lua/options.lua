@@ -30,6 +30,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>qq', ':qa!<CR>', { desc = 'Quit everything' })
 
+vim.keymap.set('n', '[b', '<CMD>bprevious<CR>', { desc = "Previous buffer" })
+vim.keymap.set('n', ']b', '<CMD>bnext<CR>', { desc = "Previous buffer" })
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`

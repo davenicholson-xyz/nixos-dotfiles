@@ -1,0 +1,23 @@
+{
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 12,
+
+    "include" : ["/home/dave/.dotfiles/waybar/dark/modules.json"],
+
+    "modules-left": [
+      "hyprland/workspaces"
+    ],
+
+    "modules-center": [
+     ],
+
+    "modules-right": [
+      "clock"
+    ],
+
+}
