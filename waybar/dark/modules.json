@@ -23,8 +23,17 @@
         }
     },
 
+    "network": {
+        "interface" : "ens18",
+        "format" : "{ifname}",
+        "format-ethernet" : "󰈀",
+        "tooltip-format-ethernet" : "<b>{ipaddr}/{cidr}</b>"  
+    },
+
     "clock": {
         "interval": 60,
-        "format": "{:%H:%M}"
+        "format": "{:%H:%M}",
+        "tooltip" : true,
+        "tooltip-format" : "{:%d %m %Y}"
     }
 }

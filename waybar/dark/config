@@ -17,6 +17,7 @@
      ],
 
     "modules-right": [
+      "network",
       "clock"
     ],
 

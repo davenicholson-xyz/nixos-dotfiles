@@ -21,7 +21,6 @@
 }
 
 .module {
-    
 }
 
 window#waybar {
@@ -33,14 +32,24 @@ window#waybar.empty #window {
     opacity: 0;
 }
 
-#clock {
+#clock, #network {
     background: @bg;
     font-weight: bold;
     border-bottom: 4px solid @alt;
     margin: 2px 0px 0px 1px;
-    padding: 0px 6px;
-    border-radius: 4px;
+    padding: 0px 8px 0px 8px;
 }
+
+#clock {
+    margin: 2px 0px 0px 1px;
+    padding: 0px 8px 0px 8px;
+}
+
+#network {
+    margin: 2px 4px 0px 1px;
+    padding: 0px 10px 0px 8px;
+}
+
 
 #taskbar, #window {
     margin: 4px 4px 1px 3px;
