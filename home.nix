@@ -36,6 +36,7 @@ in {
     nodePackages."live-server"
     hugo
 
+    # Neovim required
     lua-language-server
     nodePackages.typescript-language-server
   ];
@@ -47,6 +48,8 @@ in {
     ".config/foot/foot.ini".source = foot/foot.ini;
     ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
+
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/nvim";
 
   # xdg.configFile.nvim = {
   #   source = ./nvim;
