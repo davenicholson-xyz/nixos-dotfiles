@@ -108,6 +108,7 @@
     bash
     killall
     nerdfonts
+    ripgrep
     font-awesome
     git
     gcc
