@@ -48,10 +48,10 @@ in {
     ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
 
-  xdg.configFile.nvim = {
-    source = ./nvim;
-    recursive = true;
-  };
+  # xdg.configFile.nvim = {
+  #   source = ./nvim;
+  #   recursive = true;
+  # };
 
   xdg.configFile.wal = {
     source = ./wal;
