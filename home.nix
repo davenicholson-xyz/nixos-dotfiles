@@ -5,6 +5,8 @@ let
     ls = "eza --long --no-time --group-directories-first --icons";
     lg = "lazygit";
 
+    nc = "nvim /home/dave/.dotfiles/configuration.nix";
+    ns = "sudo nixos-rebuild switch --flake /home/dave/.dotfiles";
     hc = "nvim /home/dave/.dotfiles/home.nix";
     hs = "home-manager switch --flake /home/dave/.dotfiles && hyprctl reload";
   };
@@ -20,8 +22,8 @@ in {
     cinnamon.nemo
     swww
     waypaper
-    ags
     jq
+    bat
     fastfetch
     eza
     yazi
