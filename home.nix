@@ -4,11 +4,12 @@ let
     # ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
     ls = "eza --long --no-time --group-directories-first --icons";
     lg = "lazygit";
+    cat = "bat";
 
     nc = "nvim /home/dave/.dotfiles/configuration.nix";
     ns = "sudo nixos-rebuild switch --flake /home/dave/.dotfiles";
     hc = "nvim /home/dave/.dotfiles/home.nix";
-    hs = "home-manager switch --flake /home/dave/.dotfiles && hyprctl reload";
+    hs = "home-manager switch --impure --flake /home/dave/.dotfiles && hyprctl reload";
   };
 in {
   home.username = "dave";
@@ -84,11 +85,13 @@ in {
       # eval "$(zellij setup --generate-auto-start zsh)"
     '';
     shellAliases = aliases;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [];
-      theme = "eastwood";
-    };
+  };
+
+  programs.oh-my-posh = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile oh-my-posh/myspace.json));
+    # useTheme = "space";
   };
 
   programs.zellij.enable = true;

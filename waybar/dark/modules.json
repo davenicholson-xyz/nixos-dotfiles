@@ -16,11 +16,17 @@
             "class<foot>" : "",
             "title<nvim>" : "",
             "class<google-chrome>" : "",
-            "class<nemo>" : "󰉋"
+            "class<nemo>" : "󰉋",
+            "class<yazi>" : "󰉋"
         },
         "persistent-workspaces": {
             "*": 2
         }
+    },
+
+    "tray" : {
+        "icon-size" : 18,
+        "spacing" : 10
     },
 
     "network": {
@@ -34,6 +40,6 @@
         "interval": 60,
         "format": "{:%H:%M}",
         "tooltip" : true,
-        "tooltip-format" : "{:%d %m %Y}"
+        "tooltip-format" : "{:L%A, %B %d, %Y}"
     }
 }
