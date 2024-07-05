@@ -100,7 +100,6 @@ in {
     enable = true;
     enableZshIntegration = true;
     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile oh-my-posh/myspace.json));
-    # useTheme = "space";
   };
 
   programs.zellij.enable = true;
