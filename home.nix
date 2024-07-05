@@ -33,7 +33,10 @@ in {
     lazygit
     trash-cli
     waybar
-    dunst
+    swaynotificationcenter
+    grim
+    slurp
+    # dunst
 
     # Dev bits
     nodePackages."live-server"
@@ -47,12 +50,12 @@ in {
   home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ";
 
   home.file = {
-    ".config/hypr/hyprland.conf".source = hypr/hyprland.conf;
     ".config/foot/foot.ini".source = foot/foot.ini;
     ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
 
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/nvim";
+  home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/hypr";
 
   xdg.configFile.wal = {
     source = ./wal;
@@ -85,6 +88,12 @@ in {
       # eval "$(zellij setup --generate-auto-start zsh)"
     '';
     shellAliases = aliases;
+    enableCompletion = true;
+    # autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    history = {
+      size = 10000;
+    };
   };
 
   programs.oh-my-posh = {

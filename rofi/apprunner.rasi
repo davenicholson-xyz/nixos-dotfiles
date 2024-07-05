@@ -1,4 +1,4 @@
-@import "~/.cache/wal/colors-rofi-dark"
+@import "/home/dave/.cache/wal/colors-rofi-dark.rasi"
 
 configuration {
   modi: "window,drun,ssh,combi";
@@ -12,6 +12,6 @@ configuration {
   width: 340px;
   border-radius: 10px;
   border: 2px;
-  border-color: @active-background;
+  border-color: @foreground;
 }
 

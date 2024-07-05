@@ -104,9 +104,9 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-      noto-fonts-emoji
-      roboto
-      (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+    noto-fonts-emoji
+    roboto
+    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
   ];
 
 # List packages installed in system profile. To search, run:
