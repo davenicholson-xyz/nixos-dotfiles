@@ -17,7 +17,9 @@
             "title<nvim>" : "",
             "class<google-chrome>" : "",
             "class<nemo>" : "󰉋",
-            "class<yazi>" : "󰉋"
+            "class<yazi>" : "󰉋",
+            "class<steam>" : "",
+            "class<factorio>" : ""
         },
         "persistent-workspaces": {
             "*": 2
@@ -25,8 +27,8 @@
     },
 
     "tray" : {
-        "icon-size" : 18,
-        "spacing" : 10
+        "icon-size" : 14,
+        "spacing" : 6 
     },
 
     "network": {

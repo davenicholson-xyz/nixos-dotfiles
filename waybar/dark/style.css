@@ -32,12 +32,17 @@ window#waybar.empty #window {
     opacity: 0;
 }
 
-#clock, #network, #custom-notification {
+#clock, #network, #tray, #custom-notification {
     background: @bg;
     font-weight: bold;
     border-bottom: 4px solid @alt;
     margin: 2px 0px 0px 1px;
     padding: 0px 8px 0px 8px;
+}
+
+#tray {
+    margin: 2px 4px 0px 1px;
+    padding: 0px 10px 0px 8px;
 }
 
 #clock {
