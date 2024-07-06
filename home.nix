@@ -35,6 +35,7 @@ in {
       trash-cli
       waybar
       swaynotificationcenter
+      networkmanagerapplet
       grim
       slurp
 # dunst
