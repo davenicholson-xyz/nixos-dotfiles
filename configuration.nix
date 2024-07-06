@@ -18,6 +18,15 @@
   networking.hostName = "nixos"; # Define your hostname.
 # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  services.nfs = {
+    server.enable = true;
+  };
+
+  fileSystems."/mnt/media" = {
+    device = "172.16.69.69:/export/media";
+    fsType = "nfs";
+  };
+
 # Configure network proxy if necessary
 # networking.proxy.default = "http://user:password@proxy:port/";
 # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -79,12 +88,12 @@
     xwayland.enable = true;
   };
 
-  # programs.steam = {
-  #   enable = true;
-  #   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  #     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  #     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  # };
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
 
   # services.xserver.enable = true;
   # services.xserver.displayManager.sddm.enable = true;
