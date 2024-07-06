@@ -1,51 +1,52 @@
 { config, pkgs, ... }:
 let 
-  aliases = {
-    # ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
-    ls = "eza --long --no-time --group-directories-first --icons";
-    lg = "lazygit";
-    cat = "bat";
+aliases = {
+# ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
+  ls = "eza --long --no-time --group-directories-first --icons";
+  lg = "lazygit";
+  cat = "bat";
+  cd = "z";
 
-    nc = "nvim /home/dave/.dotfiles/configuration.nix";
-    ns = "sudo nixos-rebuild switch --flake /home/dave/.dotfiles";
-    hc = "nvim /home/dave/.dotfiles/home.nix";
-    hs = "home-manager switch --impure --flake /home/dave/.dotfiles && hyprctl reload";
-  };
+  nc = "nvim /home/dave/.dotfiles/configuration.nix";
+  ns = "sudo nixos-rebuild switch --flake /home/dave/.dotfiles";
+  hc = "nvim /home/dave/.dotfiles/home.nix";
+  hs = "home-manager switch --impure --flake /home/dave/.dotfiles && hyprctl reload";
+};
 in {
   home.username = "dave";
   home.homeDirectory = "/home/dave";
 
   home.stateVersion = "23.11"; # Please read the comment before changing.
-  home.enableNixpkgsReleaseCheck = false;
+    home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
     google-chrome
-    cinnamon.nemo
-    swww
-    waypaper
-    jq
-    bat
-    fastfetch
-    eza
-    yazi
-    rofi-wayland
-    pywal
-    lazygit
-    trash-cli
-    waybar
-    swaynotificationcenter
-    grim
-    slurp
-    # dunst
+      cinnamon.nemo
+      swww
+      waypaper
+      jq
+      bat
+      fastfetch
+      eza
+      yazi
+      rofi-wayland
+      pywal
+      lazygit
+      trash-cli
+      waybar
+      swaynotificationcenter
+      grim
+      slurp
+# dunst
 
-    # Dev bits
-    nodePackages."live-server"
-    hugo
+# Dev bits
+      nodePackages."live-server"
+      hugo
 
-    # Neovim required
-    lua-language-server
-    nodePackages.typescript-language-server
-  ];
+# Neovim required
+      lua-language-server
+      nodePackages.typescript-language-server
+      ];
 
   home.file.".icons/default".source = "${pkgs.vanilla-dmz}/share/icons/Vanilla-DMZ";
 
@@ -84,13 +85,13 @@ in {
     enable = true;
     initExtra = ''
       cat /home/dave/.cache/wal/sequences
-      fastfetch
-      # eval "$(zellij setup --generate-auto-start zsh)"
-    '';
+# fastfetch
+# eval "$(zellij setup --generate-auto-start zsh)"
+      '';
     shellAliases = aliases;
     enableCompletion = true;
-    # autosuggestion.enable = true;
-    # syntaxHighlighting.enable = true;
+# autosuggestion.enable = true;
+# syntaxHighlighting.enable = true;
     history = {
       size = 10000;
     };
@@ -100,6 +101,11 @@ in {
     enable = true;
     enableZshIntegration = true;
     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile oh-my-posh/myspace.json));
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.zellij.enable = true;

@@ -28,12 +28,16 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<leader>qq', ':qa!<CR>', { desc = 'Quit everything' })
+vim.keymap.set('n', '<leader>qq', '<CMD>qa!<CR>', { desc = 'Quit everything' })
 
 vim.keymap.set('n', '[b', '<CMD>bprevious<CR>', { desc = "Previous buffer" })
 vim.keymap.set('n', ']b', '<CMD>bnext<CR>', { desc = "Previous buffer" })
 vim.keymap.set('n', 'H', '<CMD>bprevious<CR>', { desc = "Previous buffer" })
 vim.keymap.set('n', 'L', '<CMD>bnext<CR>', { desc = "Previous buffer" })
+
+vim.keymap.set('n', '<C-s>', '<CMD>w<CR>', { desc = "Save" })
+
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = "Rename" })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
