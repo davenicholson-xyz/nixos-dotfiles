@@ -143,7 +143,7 @@
       kitty
       foot
       htop
-      gnome.adwaita-icon-theme	 
+      adwaita-icon-theme	 
       expressvpn
 
       direnv
@@ -173,10 +173,11 @@
   };
 
 # Open ports in the firewall.
-  networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 
-    8080 # live-server
-  ]; 
+  networking.firewall.enable = false;
+  # networking.firewall.allowedTCPPorts = [ 
+  #   8080 # live-server
+  # ]; 
+  # networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
 
 # This value determines the NixOS release from which the default
 # settings for stateful data, like file locations and database versions

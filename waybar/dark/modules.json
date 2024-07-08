@@ -19,10 +19,11 @@
             "class<nemo>" : "󰉋",
             "class<yazi>" : "󰉋",
             "class<steam>" : "",
-            "class<factorio>" : ""
+            "class<factorio>" : "",
+            "class<vlc>" : "󰕼"
         },
         "persistent-workspaces": {
-            "*": 2
+            "*": 4
         }
     },
 

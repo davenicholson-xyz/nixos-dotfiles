@@ -41,13 +41,13 @@ window#waybar.empty #window {
 }
 
 #tray {
-    margin: 2px 4px 0px 1px;
-    padding: 0px 10px 0px 8px;
+    margin: 2px 3px 0px 1px;
+    padding: 0px 8px 0px 8px;
 }
 
 #clock {
     margin: 2px 0px 0px 1px;
-    padding: 0px 8px 0px 8px;
+    padding: 0px 4px 0px 4px;
 }
 
 #network {
@@ -63,14 +63,9 @@ window#waybar.empty #window {
 #taskbar, #window {
     margin: 4px 4px 1px 3px;
     padding: 3px 5px;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     background: @bg;
     font-weight: bold;
-}
-
-#taskbar {
-    margin-left: 6px;
-    padding-left: 3px;
 }
 
 #taskbar.empty {
@@ -96,12 +91,13 @@ window#waybar.empty #window {
     margin: 2px 1px 0px 1px;
     padding: 0px 6px;
     transition: all 0.3s ease-in-out;
-    border-radius: 4px;
+    /* border-radius: 50%; */
     border-bottom: 4px solid @bg;
 }
 
 #workspaces button.active {
     border-bottom: 4px solid @alt;
+    /* border-radius: 4px; */
     transition: all 0.3s ease-in-out;
 }
 

@@ -38,6 +38,11 @@ in {
       networkmanagerapplet
       grim
       slurp
+      streamlink
+      mpv
+      vlc
+      nodePackages."castnow"
+      mkchromecast
 # dunst
 
 # Dev bits
