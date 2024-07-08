@@ -142,7 +142,7 @@
       gcc
       kitty
       foot
-      htop
+      btop
       adwaita-icon-theme	 
       expressvpn
 
