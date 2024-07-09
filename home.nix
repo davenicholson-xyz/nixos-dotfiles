@@ -17,10 +17,10 @@ in {
   home.homeDirectory = "/home/dave";
 
   home.stateVersion = "23.11"; # Please read the comment before changing.
-    home.enableNixpkgsReleaseCheck = false;
+  home.enableNixpkgsReleaseCheck = false;
 
   home.packages = with pkgs; [
-    google-chrome
+      google-chrome
       cinnamon.nemo
       swww
       waypaper
@@ -41,7 +41,6 @@ in {
       streamlink
       mpv
       vlc
-      nodePackages."castnow"
       mkchromecast
 # dunst
 
@@ -63,6 +62,7 @@ in {
 
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/nvim";
   home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/hypr";
+  home.file.".config/systemd/user".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/systemd";
 
   xdg.configFile.wal = {
     source = ./wal;

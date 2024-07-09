@@ -7,4 +7,4 @@ CHROMECAST_IP=172.16.66.105
 FILE_CACHE=10000
 
 
-streamlink "--twitch-api-header=Authorization=OAuth uaabcvhh1aw5bd3f6rt2lrjs1jmwm2" twitch.tv/$STREAMER $QUALITY --player vlc -a '--sout "#chromecast" --sout-chromecast-ip=172.16.66.105 --demux-filter=demux_chromecast -I dummy --play-and-exit --file-caching=10000'
+streamlink "--twitch-api-header=Authorization=OAuth uaabcvhh1aw5bd3f6rt2lrjs1jmwm2" twitch.tv/$STREAMER $QUALITY --twitch-disable-ads --player vlc -a '--sout "#chromecast" --sout-chromecast-ip=172.16.66.105 --demux-filter=demux_chromecast -I dummy --play-and-exit --file-caching=10000'

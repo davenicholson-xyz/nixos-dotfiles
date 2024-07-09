@@ -18,9 +18,9 @@
   networking.hostName = "nixos"; # Define your hostname.
 # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  services.nfs = {
-    server.enable = true;
-  };
+    services.nfs = {
+      server.enable = true;
+    };
 
   fileSystems."/mnt/media" = {
     device = "172.16.69.69:/export/media";
@@ -88,22 +88,22 @@
     xwayland.enable = true;
   };
 
-  # programs.steam = {
-  #   enable = true;
-  #   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  #     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  #     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  # };
+# programs.steam = {
+#   enable = true;
+#   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+#     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+#     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+# };
 
-  # services.xserver.enable = true;
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma6.enable = true;
+# services.xserver.enable = true;
+# services.xserver.displayManager.sddm.enable = true;
+# services.xserver.desktopManager.plasma6.enable = true;
 
-  # services.xserver = {
-  #   enable = true;
-  #   displayManager.gdm.enable = true;
-  #   desktopManager.gnome.enable = true;
-  # };
+# services.xserver = {
+#   enable = true;
+#   displayManager.gdm.enable = true;
+#   desktopManager.gnome.enable = true;
+# };
 
   services.expressvpn.enable = true;
 
@@ -120,9 +120,9 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-emoji
-    roboto
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
+      noto-fonts-emoji
+      roboto
+      (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
   ];
 
 # List packages installed in system profile. To search, run:
@@ -143,6 +143,7 @@
       kitty
       foot
       btop
+      gruvbox-gtk-theme
       adwaita-icon-theme	 
       expressvpn
 
@@ -173,11 +174,11 @@
   };
 
 # Open ports in the firewall.
-  networking.firewall.enable = false;
-  # networking.firewall.allowedTCPPorts = [ 
-  #   8080 # live-server
-  # ]; 
-  # networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 
+    8080 # live-server
+  ]; 
+  networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
 
 # This value determines the NixOS release from which the default
 # settings for stateful data, like file locations and database versions
@@ -187,6 +188,6 @@
 # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 }
