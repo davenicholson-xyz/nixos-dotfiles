@@ -11,6 +11,7 @@ aliases = {
   ns = "sudo nixos-rebuild switch --flake /home/dave/.dotfiles";
   hc = "nvim /home/dave/.dotfiles/home.nix";
   hs = "home-manager switch --impure --flake /home/dave/.dotfiles && hyprctl reload";
+  hyp = "nvim /home/dave/.dotfiles/hypr";
 };
 in {
   home.username = "dave";
@@ -41,7 +42,8 @@ in {
       streamlink
       mpv
       vlc
-      mkchromecast
+      catt
+      streamlink-twitch-gui-bin
 # dunst
 
 # Dev bits

@@ -3,4 +3,4 @@ Description=Randomly change the wallpaper
 
 [Service]
 Type=oneshot
-ExecStart=/home/dave/.dotfiles/scripts/randomwallpaper /mnt/media/wallpaper/jess
+ExecStart=/home/dave/.dotfiles/scripts/randomwallhaven jess

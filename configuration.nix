@@ -178,7 +178,10 @@
   networking.firewall.allowedTCPPorts = [ 
     8080 # live-server
   ]; 
-  networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
+  networking.firewall.allowedUDPPorts = [ 
+    5353 # catt
+  ]; 
+  # networking.firewall.allowedUDPPortRanges = [ { from = 32768; to = 60999; } ];
 
 # This value determines the NixOS release from which the default
 # settings for stateful data, like file locations and database versions

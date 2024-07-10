@@ -5,6 +5,9 @@
 # WALLHAVEN_API - API key from wallhaven.cc
 # WALLHAVEN_USER - Username from wallhaven.cc
 
+WALLHAVEN_API=XXMiYVopgEjJlslkFOWxkmbdM1k4nGEi
+WALLHAVEN_USER=fatnic
+#
 COLLECTION_NAME=$(echo $1 | rev | cut -d"/" -f 1 | rev)
 
 RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")

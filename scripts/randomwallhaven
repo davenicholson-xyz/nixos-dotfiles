@@ -4,21 +4,35 @@
 # ----------------------
 # WALLHAVEN_API - API key from wallhaven.cc
 # WALLHAVEN_USER - Username from wallhaven.cc
-#
 
-CATEGORIES="101"
-PURITY="111"
+WALLHAVEN_API=XXMiYVopgEjJlslkFOWxkmbdM1k4nGEi
+WALLHAVEN_USER=fatnic
 
-if [ -z "$1" ]; then
-	QUERY=$(echo "" | rofi -dmenu -p "What's your poison?")
-else
-	QUERY=$1
-fi
+CACHE_DIR="$HOME/.cache/wallhaven"
+mkdir -p $CACHE_DIR
 
-RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/search?q=$QUERY&page=1&ratios=16x9&sorting=random&seed=$RANDOM&categories=$CATEGORIES&purity=$PURITY&apikey=$WALLHAVEN_API")
-WPAPER=$(echo "$RESULT" | jq -r '.data[1].path')
-echo $RANDOM
+COLLECTION_NAME=$(echo $1 | rev | cut -d"/" -f 1 | rev)
 
-curl -o "/home/dave/.wp" "$WPAPER"
-setwallpaper /home/dave/.wp
-# wget -P ".wp" "$RESPONSE"
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
+COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION_NAME" '.data[] | select(.label == $LABEL) | .id')
+
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
+PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+
+> $CACHE_DIR/images
+
+for ((i=1; i<=$PAGES; i++)); do
+    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+done
+
+
+SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+
+CACHED="$CACHE_DIR/$(basename $SELECTED)"
+
+if [ ! -f $CACHED ]; then
+  curl -o "$CACHED" "$SELECTED"
+fi 
+
+$HOME/.dotfiles/scripts/setwallpaper "$CACHED"
