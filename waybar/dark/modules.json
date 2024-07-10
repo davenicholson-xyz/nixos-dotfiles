@@ -45,6 +45,7 @@
         "tooltip" : true,
         "tooltip-format" : "<b>{:L%A, %B %d, %Y}</b>"
     },
+
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",

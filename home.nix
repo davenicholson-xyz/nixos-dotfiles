@@ -41,10 +41,7 @@ in {
       slurp
       streamlink
       mpv
-      vlc
       catt
-      streamlink-twitch-gui-bin
-# dunst
 
 # Dev bits
       nodePackages."live-server"

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+$HOME/.dotfiles/scripts/openwallpaper $(basename $(cat "$HOME/.cache/wal/wal"))

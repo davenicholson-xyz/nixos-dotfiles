@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# CURRENT=$(basename $(cat "$HOME/.cache/wal/wal"))
+WPID=$(echo $1 | cut -d"-" -f2 | cut -d"." -f1)
+xdg-open "https://wallhaven.cc/w/$WPID"
+

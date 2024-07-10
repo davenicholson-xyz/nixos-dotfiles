@@ -26,7 +26,6 @@ for ((i=1; i<=$PAGES; i++)); do
     echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
 done
 
-
 SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
 
 CACHED="$CACHE_DIR/$(basename $SELECTED)"
