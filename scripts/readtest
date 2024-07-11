@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-read IMG 
-echo $IMG

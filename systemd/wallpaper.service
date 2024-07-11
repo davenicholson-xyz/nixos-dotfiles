@@ -3,4 +3,4 @@ Description=Randomly change the wallpaper
 
 [Service]
 Type=oneshot
-ExecStart=/home/dave/.dotfiles/scripts/randomwallhaven wallpaper
+ExecStart=/run/current-system/sw/bin/sh -c '/home/dave/.dotfiles/scripts/wallhaven -c wallpaper | /home/dave/.dotfiles/scripts/setwallpaper'

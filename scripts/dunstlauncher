@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-pkill -9 dunst
-
-
-#dunst -conf /home/dave/.dotfiles/dunst/dunstrc > /dev/null 2>&1 &
-dunst -conf /home/dave/.cache/wal/dunstrc

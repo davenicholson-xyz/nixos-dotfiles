@@ -4,6 +4,7 @@ if [ -n "$1" ]; then
   IMG=$1
 else
   read IMG
+  echo $IMG
 fi
 
 # swww img --transition-step=1 --transition-fps=120 $1
