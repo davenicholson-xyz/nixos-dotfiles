@@ -24,6 +24,7 @@ Help()
   echo " -c   collection name"
   echo " -t   get random from toplist"
   echo " -p   how many toplist pages to pick from [default : $PAGES]"
+  echo " -r   random image with query"
   echo " -h   help menu"
   echo ""
   echo "Dependancies: curl, jq"
@@ -72,7 +73,22 @@ GetToplist()
   echo "$CACHED"
 }
 
-while getopts "hc:tp:" option; do
+GetRandom()
+{
+  > $CACHE_DIR/images
+  SEED="$RANDOM"
+    RESULT=$(curl -s -H "Content-Type:application/json" \
+        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&purity=111&seed=$SEED&ratios=landscape&&apikey=$WALLHAVEN_API")
+        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+  CACHED="$CACHE_DIR/$(basename $SELECTED)"
+  if [ ! -f $CACHED ]; then
+    curl -o "$CACHED" "$SELECTED"
+  fi 
+  echo "$CACHED"
+}
+
+while getopts "hc:tr:p:" option; do
   case $option in 
     h)
       Help
@@ -83,6 +99,8 @@ while getopts "hc:tp:" option; do
       TOPLIST=true;;
     p)
       PAGES=$OPTARG;;
+    r)
+      QUERY=$OPTARG;;
     \?)
       echo "Invalid option"
       exit;;
@@ -98,5 +116,10 @@ fi
 
 if [[ -v COLLECTION ]]; then
   GetCollection
+  exit
+fi
+
+if [[ -v QUERY ]]; then
+  GetRandom
   exit
 fi
