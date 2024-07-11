@@ -13,8 +13,10 @@ mkdir -p $CACHE_DIR
 
 > $CACHE_DIR/images
 
+SEED="$RANDOM"
+
 for ((i=1; i<=5; i++)); do
-RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/search?sorting=toplist&purity=111&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/search?sorting=toplist&purity=111&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
     echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
 done
 

@@ -5,33 +5,121 @@
 # WALLHAVEN_API - API key from wallhaven.cc
 # WALLHAVEN_USER - Username from wallhaven.cc
 
-WALLHAVEN_API=XXMiYVopgEjJlslkFOWxkmbdM1k4nGEi
-WALLHAVEN_USER=fatnic
-#
-COLLECTION_NAME=$(echo $1 | rev | cut -d"/" -f 1 | rev)
+CACHE_DIR="$HOME/.cache/wallhaven"
+PAGES=5
 
-RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
-COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION_NAME" '.data[] | select(.label == $LABEL) | .id')
+Help() 
+{
+  echo "Wallpaper switcher for wallhaven.cc"
+  echo ""
+  echo "Required env variables:"
+  echo "WALLHAVEN_API - API key from wallhaven.cc"
+  echo "WALLHAVEN_USER - wallhaven username"
+  echo ""
+  echo "Syntax: wallhaven [-options]"
+  echo "options:"
+  echo " -c   collection name"
+  echo " -t   get random from toplist"
+  echo " -p   how many toplist pages to pick from [default : $PAGES]"
+  echo " -h   help menu"
+  echo ""
+  echo "Dependancies: curl, jq"
+}
 
-RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
-PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+GetCollection()
+{
+  RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
+  COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION" '.data[] | select(.label == $LABEL) | .id')
 
-> images.txt
+  RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
+  PAGES=$(echo "$RESULT" | jq '.meta.last_page')
 
-for ((i=1; i<=$PAGES; i++)); do
-    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
-    echo "$RESULT" | jq -r '.data[].path ' >> images.txt
+  > $CACHE_DIR/images
+
+  for ((i=1; i<=$PAGES; i++)); do
+      RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+      echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  done
+
+  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+
+  CACHED="$CACHE_DIR/$(basename $SELECTED)"
+
+  if [ ! -f $CACHED ]; then
+    curl -o "$CACHED" "$SELECTED"
+  fi 
+
+  echo "$CACHED"
+}
+
+GetToplist()
+{
+  > $CACHE_DIR/images
+  SEED="$RANDOM"
+  for ((i=1; i<=$PAGES; i++)); do
+    RESULT=$(curl -s -H "Content-Type:application/json" \
+        "https://wallhaven.cc/api/v1/search?sorting=toplist&purity=111&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  done
+  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+  CACHED="$CACHE_DIR/$(basename $SELECTED)"
+  if [ ! -f $CACHED ]; then
+    curl -o "$CACHED" "$SELECTED"
+  fi 
+  echo "$CACHED"
+}
+
+while getopts "hc:tp:" option; do
+  case $option in 
+    h)
+      Help
+      exit;;
+    c)
+      COLLECTION=$OPTARG;;
+    t)
+      TOPLIST=true;;
+    p)
+      PAGES=$OPTARG;;
+    \?)
+      echo "Invalid option"
+      exit;;
+  esac
 done
 
-if [ ! -d "$1" ]; then
-    mkdir -p "$1"
-else
-    rm $1/*
+mkdir -p $CACHE_DIR
+
+if [[ -v TOPLIST ]]; then
+  GetToplist
+  exit
 fi
 
-while read p; do
-    curl -o "$1/$(basename $p)" "$p"
-    # wget -P $1 $p
-done < images.txt
+if [[ -v COLLECTION ]]; then
+  GetCollection
+  exit
+fi
 
-rm images.txt
+#
+# COLLECTION_NAME=$(echo $1 | rev | cut -d"/" -f 1 | rev)
+#
+# RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
+# COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION_NAME" '.data[] | select(.label == $LABEL) | .id')
+#
+# RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
+# PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+#
+# > $CACHE_DIR/images
+#
+# for ((i=1; i<=$PAGES; i++)); do
+#     RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+#     echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+# done
+#
+# SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+#
+# CACHED="$CACHE_DIR/$(basename $SELECTED)"
+#
+# if [ ! -f $CACHED ]; then
+#   curl -o "$CACHED" "$SELECTED"
+# fi 
+#
+# $HOME/.dotfiles/scripts/setwallpaper "$CACHED"

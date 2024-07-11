@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
+if [ -n "$1" ]; then
+  IMG=$1
+else
+  read IMG
+fi
+
 # swww img --transition-step=1 --transition-fps=120 $1
-swww img --transition-step=255 --transition-fps=255 $1
+swww img --transition-step=255 --transition-fps=255 $IMG
 # swww img --transition-type=random $1
-wal -i $1
+wal -i $IMG
 
 nohup hyprctrl reload >/dev/null 2>&1 &
 nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
