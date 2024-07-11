@@ -42,6 +42,7 @@ in {
       streamlink
       mpv
       catt
+      zsh-history-substring-search
 
 # Dev bits
       nodePackages."live-server"
@@ -89,14 +90,12 @@ in {
   programs.zsh = {
     enable = true;
     initExtra = ''
+      bindkey "''${key[Up]}" up-line-or-search
       cat /home/dave/.cache/wal/sequences
-# fastfetch
-# eval "$(zellij setup --generate-auto-start zsh)"
       '';
     shellAliases = aliases;
     enableCompletion = true;
-# autosuggestion.enable = true;
-# syntaxHighlighting.enable = true;
+    # syntaxHighlighting.enable = true;
     history = {
       size = 10000;
     };

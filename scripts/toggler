@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+TOGGLER=$(grep -n @@toggle $1)
+TOGGLE_LN=$(cut -d":" -f1 <<< "$TOGGLER")
+
+FOUND=false
+CURRENT_LINE=$(($TOGGLE_LN))
+
+sed "1,$((TOGGLE_LN))d" "$1" | while IFS= read -r line
+do
+ 
+  if [[ -z "$line" ]]; then
+    
+    if [ $FOUND = true ]; then
+      LN=$((TOGGLE_LN + 1))
+      sed -i "${LN}s/^#//" $1
+      break
+    fi
+
+    break
+  fi
+
+  CURRENT_LINE=$(($CURRENT_LINE + 1))
+
+  if [[ "$line" =~ ^\# ]]; then
+
+    if [ $FOUND = true ]; then
+      sed -i "${CURRENT_LINE}s/^#//" $1
+      break
+    fi
+    continue
+  fi
+
+  sed -i "${CURRENT_LINE}s/^/#/" $1
+  FOUND=true
+
+done
