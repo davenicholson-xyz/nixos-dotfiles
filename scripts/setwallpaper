@@ -7,12 +7,12 @@ else
   echo $IMG
 fi
 
-# swww img --transition-step=1 --transition-fps=120 $1
-swww img --transition-step=255 --transition-fps=255 $IMG
-# swww img --transition-type=random $1
-wal -i $IMG
-
-nohup hyprctrl reload >/dev/null 2>&1 &
-nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
-# nohup /home/dave/.dotfiles/scripts/dunstlauncher >/dev/null 2>&1 &
-nohup swaync-client -rs >/dev/null 2>&1 &
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  swww img --transition-step=255 --transition-fps=255 $IMG
+  wal -i $IMG
+  nohup hyprctrl reload >/dev/null 2>&1 &
+  nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
+  nohup swaync-client -rs >/dev/null 2>&1 &
+elif [[ "$OSTYPE" == "darwin" ]]; then
+  echo "This be MAC"
+fi
