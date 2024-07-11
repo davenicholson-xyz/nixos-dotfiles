@@ -96,7 +96,7 @@ while getopts "hc:tr:p:" option; do
     c)
       COLLECTION=$OPTARG;;
     t)
-      TOPLIST=true;;
+      TOPLIST=X;;
     p)
       PAGES=$OPTARG;;
     r)
@@ -110,16 +110,19 @@ done
 mkdir -p $CACHE_DIR
 
 if [[ -v TOPLIST ]]; then
+  echo "Fetching random wallpaper from toplist"
   GetToplist
   exit
 fi
 
 if [[ -v COLLECTION ]]; then
+  echo "Fetching random wallpaper from collection $COLLECTION"
   GetCollection
   exit
 fi
 
 if [[ -v QUERY ]]; then
+  echo "Fetching random wallpaper with $QUERY"
   GetRandom
   exit
 fi
