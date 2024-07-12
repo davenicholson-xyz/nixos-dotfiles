@@ -14,5 +14,5 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
   nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
   nohup swaync-client -rs >/dev/null 2>&1 &
 elif [[ "$OSTYPE" == "darwin" ]]; then
-  echo "This be MAC"
+  osascript -e 'tell application "Finder" to set desktop picture to POSIX file "'"$IMG"'"'
 fi
