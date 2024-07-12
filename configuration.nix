@@ -150,6 +150,7 @@
       direnv
       go
       nodejs
+      gnumake
       ];
 
   programs.zsh.enable = true;

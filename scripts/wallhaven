@@ -9,6 +9,7 @@ source $HOME/.dotfiles/.env
 
 CACHE_DIR="$HOME/.cache/wallhaven"
 PAGES=5
+CATEGORIES=111
 PURITY=110
 
 Help() 
@@ -24,6 +25,7 @@ Help()
   echo " -c   collection name"
   echo " -t   get random from toplist"
   echo " -x   filter naughty stuff in bits sfw|risky|nsfw (default : 110)"
+  echo " -k   k... ategories general|anime|people (default: 111)"
   echo " -p   how many toplist pages to pick from [default : $PAGES]"
   echo " -r   random image with query"
   echo " -i   get wallpaper by wallhaven id"
@@ -65,7 +67,7 @@ GetToplist()
   SEED="$RANDOM"
   for ((i=1; i<=$PAGES; i++)); do
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?sorting=toplist&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+        "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   done
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
@@ -81,7 +83,7 @@ GetRandom()
   > $CACHE_DIR/images
   SEED="$RANDOM"
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&purity=$PURITY&seed=$SEED&ratios=landscape&&apikey=$WALLHAVEN_API")
+        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&&apikey=$WALLHAVEN_API")
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   CACHED="$CACHE_DIR/$(basename $SELECTED)"
@@ -108,7 +110,7 @@ DeleteCache()
   rm $CACHE_DIR/*
 }
 
-while getopts "hc:tr:p:dx:i:" option; do
+while getopts "hc:tr:p:dx:i:k:" option; do
   case $option in 
     h)
       Help
@@ -125,6 +127,8 @@ while getopts "hc:tr:p:dx:i:" option; do
       WID=$OPTARG;;
     x)
       PURITY=$OPTARG;;
+    k)
+      CATEGORIES=$OPTARG;;
     d)
       DeleteCache
       exit;;
