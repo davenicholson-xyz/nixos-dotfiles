@@ -97,17 +97,25 @@ in {
       '';
     shellAliases = aliases;
     enableCompletion = true;
-    # syntaxHighlighting.enable = true;
     history = {
       size = 10000;
     };
+    oh-my-zsh = {
+      enable = true;
+      theme = "eastwood";
+      plugins = [
+        "git"
+        "history"
+        "zoxide"
+      ];
+    };
   };
 
-  programs.oh-my-posh = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile oh-my-posh/myspace.json));
-  };
+  # programs.oh-my-posh = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile oh-my-posh/myspace.json));
+  # };
 
   programs.zoxide = {
     enable = true;
