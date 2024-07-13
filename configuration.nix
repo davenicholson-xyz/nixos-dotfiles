@@ -76,7 +76,8 @@
     enable = true;
     settings = rec {
       initial_session = {
-	command = "Hyprland";
+	# command = "Hyprland";
+	command = "/home/dave/.dotfiles/scripts/hyprlauncher";
 	user = "dave";
       };
       default_session = initial_session;
@@ -86,6 +87,7 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    systemd.setPath.enable = true;
   };
 
 # programs.steam = {

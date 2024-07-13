@@ -13,11 +13,11 @@
         "window-rewrite-seperator" : "\n",
         "window-rewrite-default" : "󱄅",
         "window-rewrite": {
+            "title<.*nvim.*>" : "",
             "class<foot>" : "",
-            "title<nvim>" : "",
             "class<google-chrome>" : "",
             "class<nemo>" : "󰉋",
-            "class<yazi>" : "󰉋",
+            "class<.*yazi.*>" : "󰉋",
             "class<steam>" : "",
             "class<factorio>" : "",
             "class<vlc>" : "󰕼"

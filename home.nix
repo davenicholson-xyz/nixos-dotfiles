@@ -12,6 +12,8 @@ aliases = {
   hc = "nvim /home/dave/.dotfiles/home.nix";
   hs = "home-manager switch --impure --flake /home/dave/.dotfiles && hyprctl reload";
   hyp = "nvim /home/dave/.dotfiles/hypr";
+
+  wallc = "xdg-open $(wallhaven -u)";
 };
 in {
   home.username = "dave";
@@ -43,6 +45,7 @@ in {
       mpv
       catt
       zsh-history-substring-search
+      eyedropper
 
 # Dev bits
       nodePackages."live-server"

@@ -22,15 +22,17 @@ Help()
   echo ""
   echo "Syntax: wallhaven [-options]"
   echo "options:"
-  echo " -c   collection name"
-  echo " -t   get random from toplist"
-  echo " -x   filter naughty stuff in bits sfw|risky|nsfw (default : 110)"
-  echo " -k   k... ategories general|anime|people (default: 111)"
-  echo " -p   how many toplist pages to pick from [default : $PAGES]"
-  echo " -r   random image with query"
-  echo " -i   get wallpaper by wallhaven id"
-  echo " -d   delete cache"
-  echo " -h   help menu"
+  echo " -c <name>   collection name"
+  echo " -t          set random from toplist"
+  echo " -x <bits>   filter naughty stuff sfw|risky|nsfw [default : $PURITY]"
+  echo " -k <bits>   kategories general|anime|people [default: $CATEGORIES]"
+  echo " -p <num>    how many toplist pages to pick from [default : $PAGES]"
+  echo " -r <query>  random image with query"
+  echo " -i <id>     set wallpaper by wallhaven id"
+  echo " -f          get filepath of current wallpaper"
+  echo " -u          get url of current wallpaper"
+  echo " -d          delete cache"
+  echo " -h          help menu"
   echo ""
   echo "Dependancies: curl, jq"
 }
@@ -51,14 +53,7 @@ GetCollection()
   done
 
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
-
-  CACHED="$CACHE_DIR/$(basename $SELECTED)"
-
-  if [ ! -f $CACHED ]; then
-    curl -o "$CACHED" "$SELECTED"
-  fi 
-
-  echo "$CACHED"
+  SetWallpaper
 }
 
 GetToplist()
@@ -71,11 +66,7 @@ GetToplist()
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   done
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
-  CACHED="$CACHE_DIR/$(basename $SELECTED)"
-  if [ ! -f $CACHED ]; then
-    curl -o "$CACHED" "$SELECTED"
-  fi 
-  echo "$CACHED"
+  SetWallpaper
 }
 
 GetRandom()
@@ -86,11 +77,7 @@ GetRandom()
         "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&&apikey=$WALLHAVEN_API")
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
-  CACHED="$CACHE_DIR/$(basename $SELECTED)"
-  if [ ! -f $CACHED ]; then
-    curl -o "$CACHED" "$SELECTED"
-  fi 
-  echo "$CACHED"
+  SetWallpaper
 }
 
 GetByID()
@@ -98,11 +85,39 @@ GetByID()
   > $CACHE_DIR/images
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/w/$WID?apikey=$WALLHAVEN_API")
   SELECTED=$(echo "$RESULT" | jq -r '.data.path')
-  CACHED="$CACHE_DIR/$(basename $SELECTED)"
+  SetWallpaper
+}
+
+SetWallpaper()
+{
+  FILENAME=$(basename "$SELECTED")
+  EXT="${FILENAME##*.}"
+
+  if ! [[ $EXT =~ ^(jpg|jpeg|png)$ ]]; then
+    exit 1
+  fi
+
+  CACHED="$CACHE_DIR/$FILENAME"
+  WPID=$(echo $CACHED | cut -d"-" -f2 | cut -d"." -f1)
+
+  echo "https://wallhaven.cc/w/$WPID" > $CACHE_DIR/current
+  echo "$CACHED" >> $CACHE_DIR/current
+
   if [ ! -f $CACHED ]; then
     curl -o "$CACHED" "$SELECTED"
   fi 
+
   echo "$CACHED"
+}
+
+GetFilePath()
+{
+  sed -n '2p' $CACHE_DIR/current
+}
+
+GetUrl()
+{
+  sed -n '1p' $CACHE_DIR/current
 }
 
 DeleteCache()
@@ -110,7 +125,7 @@ DeleteCache()
   rm $CACHE_DIR/*
 }
 
-while getopts "hc:tr:p:dx:i:k:" option; do
+while getopts "hc:tr:p:dx:i:k:fu" option; do
   case $option in 
     h)
       Help
@@ -129,16 +144,30 @@ while getopts "hc:tr:p:dx:i:k:" option; do
       PURITY=$OPTARG;;
     k)
       CATEGORIES=$OPTARG;;
+    f)
+      FILEPATH=x;;
+    u)
+      URL=x;;
     d)
       DeleteCache
       exit;;
     \?)
-      echo "Invalid option"
+      Help
       exit;;
   esac
 done
 
 mkdir -p $CACHE_DIR
+
+if [[ -v FILEPATH ]]; then
+  GetFilePath
+  exit
+fi
+
+if [[ -v URL ]]; then
+  GetUrl
+  exit
+fi
 
 if [[ -v WID ]]; then
   GetByID
