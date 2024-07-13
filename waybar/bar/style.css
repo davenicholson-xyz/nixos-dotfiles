@@ -1,6 +1,6 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.9);
+@define-color bg alpha(@background, 0.6);
 @define-color fg @foreground;
 @define-color alt @color4;
 
@@ -13,18 +13,18 @@
 }
 
 .modules-left {
-    margin: 0px 0px 0px 8px;
+    /* margin: 0px 0px 0px 8px; */
 }
 
 .modules-right {
-    margin: 0px 8px 0px 0px;
+    /* margin: 0px 8px 0px 0px; */
 }
 
 .module {
 }
 
 window#waybar {
-    background: transparent;
+    background: @bg;
     font-size: 12px;
 }
 
@@ -33,9 +33,9 @@ window#waybar.empty #window {
 }
 
 #clock, #network, #tray, #custom-notification {
-    background: @bg;
+    background: transparent;
     font-weight: bold;
-    border-bottom: 2px solid @alt;
+    border-bottom: 1px solid @alt;
     margin: 2px 0px 0px 1px;
     padding: 0px 8px 0px 8px;
 }
@@ -64,7 +64,7 @@ window#waybar.empty #window {
     margin: 4px 4px 1px 3px;
     padding: 3px 5px;
     /* border-radius: 4px; */
-    background: @bg;
+    background: transparent; 
     font-weight: bold;
 }
 
@@ -86,13 +86,11 @@ window#waybar.empty #window {
 
 #workspaces button {
     color: @fg;
-    background: @bg;
+    background: transparent;
     font-size: 18px;
-    margin: 2px 1px 0px 1px;
     padding: 0px 6px;
     transition: all 0.3s ease-in-out;
-    border-radius: 0;
-    border-bottom: 2px solid @bg;
+    border-radius: 0px;
 }
 
 #workspaces button.active {

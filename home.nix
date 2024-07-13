@@ -76,8 +76,6 @@ in {
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    WALLHAVEN_API = "XXMiYVopgEjJlslkFOWxkmbdM1k4nGEi";
-    WALLHAVEN_USER = "fatnic";
   };
 
   home.sessionPath = [

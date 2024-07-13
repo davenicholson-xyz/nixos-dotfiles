@@ -1,0 +1,69 @@
+{
+    "hyprland/workspaces" : {
+        "on-click": "activate",
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{windows}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": "",
+            "empty": ""
+        },
+        "window-rewrite-seperator" : "\n",
+        "window-rewrite-default" : "󱄅",
+        "window-rewrite": {
+            "title<.*nvim.*>" : "",
+            "class<foot>" : "",
+            "class<google-chrome>" : "",
+            "class<nemo>" : "󰉋",
+            "class<.*yazi.*>" : "󰉋",
+            "class<steam>" : "",
+            "class<factorio>" : "",
+            "class<vlc>" : "󰕼"
+        },
+        "persistent-workspaces": {
+            "*": 4
+        }
+    },
+
+    "tray" : {
+        "icon-size" : 14,
+        "spacing" : 6 
+    },
+
+    "network": {
+        "interface" : "ens18",
+        "format" : "{ifname}",
+        "format-ethernet" : "󰈀",
+        "tooltip-format-ethernet" : "<b>{ipaddr}/{cidr}</b>"  
+    },
+
+    "clock": {
+        "interval": 60,
+        "format": "{:%H:%M}",
+        "tooltip" : true,
+        "tooltip-format" : "<b>{:L%A, %B %d, %Y}</b>"
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
+}

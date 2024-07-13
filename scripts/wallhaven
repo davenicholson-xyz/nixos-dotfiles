@@ -16,28 +16,39 @@ Help()
 {
   echo "Wallpaper switcher for wallhaven.cc"
   echo ""
-  echo "Required env variables:"
+  echo "Optional environmental variables:"
   echo "WALLHAVEN_API - API key from wallhaven.cc"
   echo "WALLHAVEN_USER - wallhaven username"
   echo ""
   echo "Syntax: wallhaven [-options]"
   echo "options:"
-  echo " -c | --collection <name>   collection name"
-  echo " -t | --toplist             set randomly from toplist"
+  echo " -c | --collection <name>   collection name (API and username required)"
+  echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
   echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
   echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
-  echo " -r | --random <query>      random image with query"
-  echo " -i | --id <id>             set wallpaper by wallhaven id"
+  echo " -r | --random <query>      random image with query (API required for NSFW)"
+  echo " -i | --id <id>             set wallpaper by wallhaven id (API required for NSFW)"
   echo " -f | --cached-file         get filepath of current wallpaper"
   echo " -u | --cached-url          get url of current wallpaper"
   echo " -d | --delete-cache        delete cache"
-  echo " -h | --help               help menu"
+  echo " -h | --help                help menu"
   echo ""
 }
 
 GetCollection()
 {
+
+  if ! [[ -v WALLHAVEN_USER ]]; then
+    echo "Error: WALLHAVEN_USER has not been set"
+    exit 1;
+  fi
+
+  if ! [[ -v WALLHAVEN_API ]]; then
+    echo "Error: WALLHAVEN_API has not been set"
+    exit 1;
+  fi
+
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
   COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION" '.data[] | select(.label == $LABEL) | .id')
 
