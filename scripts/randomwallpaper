@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-
-IMAGE=$(find $1 -type f | shuf -n 1)
-/home/dave/.dotfiles/scripts/setwallpaper $IMAGE
-

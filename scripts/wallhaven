@@ -22,19 +22,18 @@ Help()
   echo ""
   echo "Syntax: wallhaven [-options]"
   echo "options:"
-  echo " -c <name>   collection name"
-  echo " -t          set random from toplist"
-  echo " -x <bits>   filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
-  echo " -k <bits>   kategories general|anime|people [default: $CATEGORIES]"
-  echo " -p <num>    how many toplist pages to pick from [default : $PAGES]"
-  echo " -r <query>  random image with query"
-  echo " -i <id>     set wallpaper by wallhaven id"
-  echo " -f          get filepath of current wallpaper"
-  echo " -u          get url of current wallpaper"
-  echo " -d          delete cache"
-  echo " -h          help menu"
+  echo " -c | --collection <name>   collection name"
+  echo " -t | --toplist             set randomly from toplist"
+  echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
+  echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
+  echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
+  echo " -r | --random <query>      random image with query"
+  echo " -i | --id <id>             set wallpaper by wallhaven id"
+  echo " -f | --cached-file         get filepath of current wallpaper"
+  echo " -u | --cached-url          get url of current wallpaper"
+  echo " -d | --delete-cache        delete cache"
+  echo " -h | --help               help menu"
   echo ""
-  echo "Dependancies: curl, jq, sed"
 }
 
 GetCollection()
@@ -125,36 +124,47 @@ DeleteCache()
   find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) -exec rm {} \;
 }
 
-while getopts "hc:tr:p:dx:i:k:fu" option; do
-  case $option in 
-    h)
+while [[ "$1" != "" ]]; do
+  case $1 in
+    -h | --help)
       Help
       exit;;
-    c)
-      COLLECTION=$OPTARG;;
-    t)
-      TOPLIST=X;;
-    p)
-      PAGES=$OPTARG;;
-    r)
-      QUERY=$OPTARG;;
-    i)
-      WID=$OPTARG;;
-    x)
-      PURITY=$OPTARG;;
-    k)
-      CATEGORIES=$OPTARG;;
-    f)
-      FILEPATH=x;;
-    u)
-      URL=x;;
-    d)
+    -c | --collection)
+      shift
+      COLLECTION=$1;;
+    -t | --toplist)
+      TOPLIST=x;;
+    --pages)
+      shift
+      PAGES=$1;;
+    -r | --random)
+      shift
+      QUERY=$(jq -rn --arg x "$1" '$x|@uri');;
+    -i | --id)
+      shift
+      WID=$1
+      GetByID
+      exit;;
+    -p | --purity)
+      shift
+      PURITY=$1;;
+    -k | --categories)
+      shift
+      CATEGORIES=$1;;
+    -f | --cached-file)
+      GetFilePath
+      exit;;
+    -u | --cached-url)
+      GetUrl
+      exit;;
+    -d | --delete-cache)
       DeleteCache
       exit;;
-    \?)
+    *)
       Help
-      exit;;
+      exit 1;;
   esac
+  shift
 done
 
 mkdir -p $CACHE_DIR
@@ -169,10 +179,10 @@ if [[ -v URL ]]; then
   exit
 fi
 
-if [[ -v WID ]]; then
-  GetByID
-  exit
-fi
+# if [[ -v WID ]]; then
+#   GetByID
+#   exit
+# fi
 
 if [[ -v TOPLIST ]]; then
   GetToplist
