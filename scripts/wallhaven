@@ -24,7 +24,7 @@ Help()
   echo "options:"
   echo " -c <name>   collection name"
   echo " -t          set random from toplist"
-  echo " -x <bits>   filter naughty stuff sfw|risky|nsfw [default : $PURITY]"
+  echo " -x <bits>   filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k <bits>   kategories general|anime|people [default: $CATEGORIES]"
   echo " -p <num>    how many toplist pages to pick from [default : $PAGES]"
   echo " -r <query>  random image with query"
@@ -34,7 +34,7 @@ Help()
   echo " -d          delete cache"
   echo " -h          help menu"
   echo ""
-  echo "Dependancies: curl, jq"
+  echo "Dependancies: curl, jq, sed"
 }
 
 GetCollection()
@@ -74,7 +74,7 @@ GetRandom()
   > $CACHE_DIR/images
   SEED="$RANDOM"
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&&apikey=$WALLHAVEN_API")
+        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&apikey=$WALLHAVEN_API")
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
@@ -104,7 +104,7 @@ SetWallpaper()
   echo "$CACHED" >> $CACHE_DIR/current
 
   if [ ! -f $CACHED ]; then
-    curl -o "$CACHED" "$SELECTED"
+    curl -s -o "$CACHED" "$SELECTED"
   fi 
 
   echo "$CACHED"
@@ -122,7 +122,7 @@ GetUrl()
 
 DeleteCache()
 {
-  rm $CACHE_DIR/*
+  find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) -exec rm {} \;
 }
 
 while getopts "hc:tr:p:dx:i:k:fu" option; do
