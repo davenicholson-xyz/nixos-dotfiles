@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 let 
 aliases = {
-# ls = "eza --long --no-time --no-user --no-permissions --group-directories-first --icons";
   ls = "eza --long --no-time --group-directories-first --icons";
   lg = "lazygit";
   cat = "bat";
@@ -37,6 +36,7 @@ in {
       lazygit
       trash-cli
       waybar
+      ags
       swaynotificationcenter
       networkmanagerapplet
       grim
@@ -93,7 +93,6 @@ in {
   programs.zsh = {
     enable = true;
     initExtra = ''
-      bindkey "''${key[Up]}" up-line-or-search
       cat /home/dave/.cache/wal/sequences
       '';
     shellAliases = aliases;

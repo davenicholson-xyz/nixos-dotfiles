@@ -24,11 +24,13 @@ Help()
   echo "options:"
   echo " -c | --collection <name>   collection name (API and username required)"
   echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
+  echo "--hot                       set randomly from hot list (API required for NSFW)"
   echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
   echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
   echo " -r | --random <query>      random image with query (API required for NSFW)"
   echo " -i | --id <id>             set wallpaper by wallhaven id (API required for NSFW)"
+  echo " -l | --local               set wallpaper from random file in cache"
   echo " -f | --cached-file         get filepath of current wallpaper"
   echo " -u | --cached-url          get url of current wallpaper"
   echo " -d | --delete-cache        delete cache"
@@ -79,6 +81,19 @@ GetToplist()
   SetWallpaper
 }
 
+GetHot()
+{
+  > $CACHE_DIR/images
+  SEED="$RANDOM"
+  for ((i=1; i<=$PAGES; i++)); do
+    RESULT=$(curl -s -H "Content-Type:application/json" \
+        "https://wallhaven.cc/api/v1/search?sorting=hot&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  done
+  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+  SetWallpaper
+}
+
 GetRandom()
 {
   > $CACHE_DIR/images
@@ -120,6 +135,12 @@ SetWallpaper()
   echo "$CACHED"
 }
 
+GetLocal()
+{
+  find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | shuf -n 1
+  exit 0;
+}
+
 GetFilePath()
 {
   sed -n '2p' $CACHE_DIR/current
@@ -145,6 +166,8 @@ while [[ "$1" != "" ]]; do
       COLLECTION=$1;;
     -t | --toplist)
       TOPLIST=x;;
+    --hot)
+      HOT=x;;
     --pages)
       shift
       PAGES=$1;;
@@ -162,6 +185,9 @@ while [[ "$1" != "" ]]; do
     -k | --categories)
       shift
       CATEGORIES=$1;;
+    -l | --local)
+      GetLocal
+      exit;;
     -f | --cached-file)
       GetFilePath
       exit;;
@@ -190,13 +216,13 @@ if [[ -v URL ]]; then
   exit
 fi
 
-# if [[ -v WID ]]; then
-#   GetByID
-#   exit
-# fi
-
 if [[ -v TOPLIST ]]; then
   GetToplist
+  exit
+fi
+
+if [[ -v HOT ]]; then
+  GetHot
   exit
 fi
 

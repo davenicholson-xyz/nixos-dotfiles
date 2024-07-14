@@ -1,6 +1,6 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.9);
+@define-color bg alpha(@background, 0.3);
 @define-color fg @foreground;
 @define-color alt @color4;
 

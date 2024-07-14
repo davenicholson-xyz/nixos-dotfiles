@@ -4,11 +4,16 @@ if [ -n "$1" ]; then
   IMG=$1
 else
   read IMG
-  echo $IMG
+fi
+
+EXT="${IMG##*.}"
+if ! [[ $EXT =~ ^(jpg|jpeg|png)$ ]]; then
+  echo "Incorrect file format"
+  exit 1
 fi
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  swww img --transition-step=255 --transition-fps=255 $IMG
+  swww img $IMG
   wal -i $IMG
   nohup hyprctrl reload >/dev/null 2>&1 &
   nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
