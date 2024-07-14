@@ -16,7 +16,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   swww img $IMG
   wal -q -i $IMG
   nohup hyprctrl reload >/dev/null 2>&1 &
-  nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
+  # nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
+  nohup /home/dave/.dotfiles/ags/launch.sh >/dev/null 2>&1 &
   nohup swaync-client -rs >/dev/null 2>&1 &
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$IMG\""

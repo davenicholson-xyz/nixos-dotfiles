@@ -24,6 +24,7 @@ Help()
   echo "Syntax: wallhaven [-options]"
   echo "options:"
   echo " -c | --collection <name>   collection name (API and username required)"
+  echo " --pre-cache                    pre-download all wallpapers from chosen collection"
   echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
   echo " --range <range>            set time range for toplist 1d|3d|1w|1M|3M|1y [default: $TOPRANGE]"
   echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
@@ -66,8 +67,21 @@ GetCollection()
       echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   done
 
+  if [[ -v PRECACHE ]]; then
+    GetPreCache
+    exit
+  fi
+
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
+}
+
+GetPreCache()
+{
+  while read p; do
+      curl -o "$CACHE_DIR/$(basename $p)" "$p"
+  done < $CACHE_DIR/images
+  exit
 }
 
 GetToplist()
@@ -166,6 +180,8 @@ while [[ "$1" != "" ]]; do
     -c | --collection)
       shift
       COLLECTION=$1;;
+    --pre-cache)
+      PRECACHE=x;;
     -t | --toplist)
       TOPLIST=x;;
     --range)
