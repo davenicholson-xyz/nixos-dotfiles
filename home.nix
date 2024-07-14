@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 let 
 aliases = {
   ls = "eza --long --no-time --group-directories-first --icons";
@@ -15,6 +15,9 @@ aliases = {
   wallc = "xdg-open $(wallhaven -u)";
 };
 in {
+
+  imports = [ inputs.ags.homeManagerModules.default ]; 
+
   home.username = "dave";
   home.homeDirectory = "/home/dave";
 
@@ -36,7 +39,7 @@ in {
       lazygit
       trash-cli
       waybar
-      ags
+
       swaynotificationcenter
       networkmanagerapplet
       grim
@@ -111,6 +114,14 @@ in {
     };
   };
 
+  programs.ags = {
+    enable = true;
+    extraPackages = with pkgs; [
+      gtksourceview
+      webkitgtk
+      accountsservice
+    ];
+  };
   # programs.oh-my-posh = {
   #   enable = true;
   #   enableZshIntegration = true;

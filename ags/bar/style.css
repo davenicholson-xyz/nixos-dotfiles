@@ -1,0 +1,76 @@
+@import '/home/dave/.cache/wal/colors-waybar.css';
+
+@define-color bg alpha(@background, 0.4);
+@define-color fg @foreground;
+@define-color alt @color4;
+
+window.bar {
+    background-color: @bg;
+    color: @fg;
+    padding: 0px 20px 0px 20px;
+}
+
+window > box {
+    margin: 0px 8px 0px 8px;
+}
+
+box > button {
+    background-color: transparent;
+}
+
+button {
+    min-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+button:active {
+    background-color: transparent;
+}
+
+button:hover {
+    border-bottom: 3px solid @fg;
+}
+
+label {
+    font-weight: bold;
+}
+
+.workspaces > button {
+    background: transparent;
+    border: none;
+    border-radius: 0px;
+}
+
+.workspaces button {
+    border-bottom: 3px solid transparent;
+}
+.workspaces button.focused {
+    border-bottom: 3px solid @alt;
+}
+
+.systray {
+    margin: 0px 10px 0px 0px;
+}
+
+button.sysicon {
+    background: transparent;
+    padding: 4px 0px 0px 0px;
+    border-bottom: 3px solid transparent;
+}
+
+.client-title {
+    color: @bg;
+}
+
+.notification {
+    color: yellow;
+}
+
+levelbar block,
+highlight {
+    min-height: 10px;
+}
