@@ -14,7 +14,7 @@ fi
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   swww img $IMG
-  wal -i $IMG
+  wal -q -i $IMG
   nohup hyprctrl reload >/dev/null 2>&1 &
   nohup /home/dave/.dotfiles/waybar/launch.sh >/dev/null 2>&1 &
   nohup swaync-client -rs >/dev/null 2>&1 &

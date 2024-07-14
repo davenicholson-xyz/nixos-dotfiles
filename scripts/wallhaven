@@ -11,6 +11,7 @@ CACHE_DIR="$HOME/.cache/wallhaven"
 PAGES=5
 CATEGORIES=111
 PURITY=110
+TOPRANGE=1M
 
 Help() 
 {
@@ -24,8 +25,9 @@ Help()
   echo "options:"
   echo " -c | --collection <name>   collection name (API and username required)"
   echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
-  echo "--hot                       set randomly from hot list (API required for NSFW)"
+  echo " --range <range>            set time range for toplist 1d|3d|1w|1M|3M|1y [default: $TOPRANGE]"
   echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
+  echo "--hot                       set randomly from hot list (API required for NSFW)"
   echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
   echo " -r | --random <query>      random image with query (API required for NSFW)"
@@ -74,7 +76,7 @@ GetToplist()
   SEED="$RANDOM"
   for ((i=1; i<=$PAGES; i++)); do
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+        "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=$TOPRANGE&page=$i&apikey=$WALLHAVEN_API")
         echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
   done
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
@@ -166,6 +168,9 @@ while [[ "$1" != "" ]]; do
       COLLECTION=$1;;
     -t | --toplist)
       TOPLIST=x;;
+    --range)
+      shift
+      TOPRANGE=$1;;
     --hot)
       HOT=x;;
     --pages)
