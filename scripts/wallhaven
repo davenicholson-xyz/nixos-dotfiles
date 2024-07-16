@@ -24,11 +24,11 @@ Help()
   echo "Syntax: wallhaven [-options]"
   echo "options:"
   echo " -c | --collection <name>   collection name (API and username required)"
-  echo " --pre-cache                    pre-download all wallpapers from chosen collection"
+  echo " --pre-cache                pre-download all wallpapers from chosen collection"
   echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
   echo " --range <range>            set time range for toplist 1d|3d|1w|1M|3M|1y [default: $TOPRANGE]"
   echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
-  echo "--hot                       set randomly from hot list (API required for NSFW)"
+  echo " --hot                      set randomly from hot list (API required for NSFW)"
   echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
   echo " -r | --random <query>      random image with query (API required for NSFW)"
@@ -79,7 +79,11 @@ GetCollection()
 GetPreCache()
 {
   while read p; do
-      curl -o "$CACHE_DIR/$(basename $p)" "$p"
+    FILENAME=$(basename "$p")
+    if [ -f "$CACHE_DIR/$FILENAME" ]; then
+      continue
+    fi
+    curl -o "$CACHE_DIR/$(basename $p)" "$p"
   done < $CACHE_DIR/images
   exit
 }

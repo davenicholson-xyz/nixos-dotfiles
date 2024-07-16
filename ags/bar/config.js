@@ -2,6 +2,8 @@ const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const systemtray = await Service.import("systemtray")
 
+const ICON_SIZE = 14
+
 const date = Variable("", {
     poll: [1000, 'date "+%b %e - %H:%M "'],
 })
@@ -12,25 +14,57 @@ const date = Variable("", {
 
 function Wallhaven() {
     return Widget.Button({
+        child: Widget.Icon({ icon: 'google-chrome', size: ICON_SIZE }),
         class_name: "wallhaven",
-        child: Widget.Label('wh'),
-        onClicked: () => print('hello'),
-
+        on_clicked: () => {
+            Utils.exec("/run/current-system/sw/bin/sh -c '/home/dave/.dotfiles/scripts/wallhaven -c wallpaper | /home/dave/.dotfiles/scripts/setwallpaper'")
+        },
     })
 }
 
+const AppIcon = (c) => {
+    return Widget.Icon({ icon: c.toLowerCase(), size: ICON_SIZE })
+}
+
+function appsToWorkspace(ws) {
+    return ws.reduce((acc, item) => {
+        const wsid = item.workspace.id
+        if(!acc[wsid]) {
+            acc[wsid] = []
+        }
+        acc[wsid].push(item.initialClass)
+        return acc
+    }, {})
+}
+
+function workspaceIcons(ws, id) {
+    if (ws[`${id}`]) {
+        return ws[`${id}`].map(app => AppIcon(app.toLowerCase()))
+    }
+    return []
+}
+
 function Workspaces() {
+
+    const ch = Variable(appsToWorkspace(hyprland.clients))
+
     const activeId = hyprland.active.workspace.bind("id")
+
     const workspaces = hyprland.bind("workspaces")
         .as(ws => ws.map(({ id }) => Widget.Button({
             on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-            child: Widget.Label(`${id}`),
+            child: Widget.Box({
+                children: workspaceIcons(ch.value, id)
+            }),
             class_name: activeId.as(i => `${i === id ? "focused" : ""}`),
         })))
 
     return Widget.Box({
         class_name: "workspaces",
         children: workspaces,
+        setup: self => self.hook(hyprland, () => {
+            ch.value = appsToWorkspace(hyprland.clients)
+        }),
     })
 }
 
@@ -40,7 +74,6 @@ function Clock() {
         label: date.bind(),
     })
 }
-
 
 // we don't need dunst or any other notification daemon
 // because the Notifications module is a notification daemon itself
@@ -82,6 +115,7 @@ function Left() {
         spacing: 8,
         children: [
             Workspaces(),
+            // OpenApps(),
             // ClientTitle(),
         ],
     })
@@ -104,6 +138,7 @@ function Right() {
         children: [
             // Volume(),
             // BatteryLabel(),
+            Wallhaven(),
             SysTray(),
             Clock(),
         ],

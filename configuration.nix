@@ -148,6 +148,7 @@
       gruvbox-gtk-theme
       adwaita-icon-theme	 
       expressvpn
+      scummvm
 
       direnv
       go

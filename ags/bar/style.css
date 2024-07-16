@@ -1,6 +1,7 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.4);
+@define-color bg alpha(@background, 0.3);
+/* @define-color bg transparent; */
 @define-color fg @foreground;
 @define-color alt @color4;
 
@@ -39,10 +40,19 @@ label {
     font-weight: bold;
 }
 
+.wallhaven {
+    background: transparent;
+    border-bottom: 3px solid transparent;
+}
+
 .workspaces > button {
     background: transparent;
     border: none;
     border-radius: 0px;
+}
+
+.workspaces image {
+    padding: 0px 4px 0px 0px;
 }
 
 .workspaces button {
