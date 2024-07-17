@@ -7,7 +7,7 @@ function WorkspaceLabel(name) {
     return Widget.Label({
         className: "workspace-label",
         // label: workspaceRename[name] ?? name
-        label: name
+        label: `${name}` 
     })
 }
 

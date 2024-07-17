@@ -1,83 +1,60 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.3);
-/* @define-color bg transparent; */
+@define-color bg alpha(@background, 0.6);
 @define-color fg @foreground;
 @define-color alt @color4;
 
 window.bar {
-    background-color: @bg;
-    color: @fg;
-    padding: 0px 20px 0px 20px;
+    background-color: transparent;
+    color: white;
 }
 
 window > box {
     margin: 0px 8px 0px 8px;
 }
 
-box > button {
-    background-color: transparent;
+.workspace {
+    background: @bg;
+    border-radius: 10px;
+    margin: 0px 4px 0px 0px;
+    border: 2px solid @alt;
+    opacity: 0.6;
 }
 
-button {
-    min-width: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    border: none;
-    border-radius: 0px;
-    background-color: transparent;
+.workspace.active {
+    opacity: 1;
 }
 
-button:active {
-    background-color: transparent;
-}
-
-button:hover {
-    border-bottom: 3px solid @fg;
-}
-
-label {
+.workspace-label {
     font-weight: bold;
-}
-
-.wallhaven {
-    background: transparent;
-    border-bottom: 3px solid transparent;
-}
-
-.workspaces > button {
-    background: transparent;
-    border: none;
-    border-radius: 0px;
-}
-
-.workspaces image {
-    padding: 0px 1px 0px 1px;
-}
-
-.workspaces button {
-    border-bottom: 3px solid transparent;
-}
-.workspaces button.focused {
-    border-bottom: 3px solid @alt;
-}
-
-.systray {
     margin: 0px 10px 0px 0px;
 }
 
-button.sysicon {
+.workspace .app-icon {
+    margin: 2px 6px 0px 0px;
+}
+
+.clock {
+    background: @bg;
+    border-radius: 10px;
+    border: 2px solid @alt;
+    padding: 0px 10px 0px 10px;
+    font-weight: bold;
+}
+
+.systemtray {
+    background: @bg;
+    border-radius: 10px;
+    border: 2px solid @alt;
+    padding: 0px 8px 0px 8px;
+    font-weight: bold;
+}
+
+.systemtray button  {
+    border: none;
     background: transparent;
-    padding: 4px 0px 0px 0px;
-    border-bottom: 3px solid transparent;
-}
-
-.client-title {
-    color: @bg;
-}
-
-.notification {
-    color: yellow;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 3px 0px 3px;
 }
 
 levelbar block,

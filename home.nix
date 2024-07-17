@@ -26,6 +26,7 @@ in {
 
   home.packages = with pkgs; [
       google-chrome
+      firefox
       cinnamon.nemo
       swww
       waypaper
@@ -45,6 +46,7 @@ in {
       grim
       slurp
       streamlink
+      vlc
       mpv
       catt
       zsh-history-substring-search
