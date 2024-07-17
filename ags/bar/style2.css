@@ -1,0 +1,62 @@
+@import '/home/dave/.cache/wal/colors-waybar.css';
+
+@define-color bg alpha(@background, 0.5);
+@define-color fg @foreground;
+@define-color alt @color4;
+
+window.bar {
+    background-color: @bg;
+    color: white;
+}
+
+window > box {
+    margin: 0px 8px 0px 8px;
+}
+
+.workspace {
+    background: transparent;
+    border-radius: 0px;
+    border: none;
+}
+
+.workspace .active-label {
+    margin: 1px 10px 0px 0px;
+    font-size: 20px;
+    opacity: 0;
+}
+
+.workspace.active .active-label {
+    opacity: 1;
+    color: @alt;
+}
+
+.workspace-label {
+    margin: 0px 10px 0px 0px;
+}
+
+.workspace .app-icon {
+    margin: 2px 6px 0px 0px;
+}
+
+.clock {
+    background: transparent;
+    padding: 0px 10px 0px 10px;
+}
+
+.systemtray {
+    background: transparent;
+    padding: 0px 8px 0px 8px;
+    font-weight: bold;
+}
+
+.systemtray button  {
+    border: none;
+    background: transparent;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 3px 0px 3px;
+}
+
+levelbar block,
+highlight {
+    min-height: 10px;
+}

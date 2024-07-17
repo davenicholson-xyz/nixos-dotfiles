@@ -28,7 +28,7 @@ function WorkspaceIcons(id) {
 
 function WorkspaceClients(id, name) {
     return Widget.Box({
-        children: [WorkspaceLabel(name), ...WorkspaceIcons(id)],
+        children: [Widget.Label({ label: "", className: "active-label"}), WorkspaceLabel(name), ...WorkspaceIcons(id)],
     })
     .hook(hyprland, (self, eventName, data) => {
             switch(eventName) {

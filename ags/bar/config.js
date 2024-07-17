@@ -4,7 +4,7 @@ import { SystemTray } from "./widgets/systemtray.js"
 
 function Left() {
     return Widget.Box({
-        spacing: 8,
+        spacing: 4,
         children: [
             Workspaces(),
         ],
@@ -22,7 +22,7 @@ function Center() {
 function Right() {
     return Widget.Box({
         hpack: "end",
-        spacing: 6,
+        spacing: 2,
         children: [
             SystemTray(),
             Clock(),
@@ -37,7 +37,7 @@ function Bar(monitor = 0) {
         layer: "top",
         monitor,
         anchor: ["top", "left", "right"],
-        margins: [6, 0, 0, 0],
+        margins: [0, 0, 0, 0],
         exclusivity: "exclusive",
         child: Widget.CenterBox({
             start_widget: Left(),
@@ -48,7 +48,7 @@ function Bar(monitor = 0) {
 }
 
 App.config({
-    style: "./style.css",
+    style: "./style2.css",
     windows: [
         Bar(),
     ],
