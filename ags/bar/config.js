@@ -1,4 +1,5 @@
 import { Clock } from "./widgets/clock.js"
+import { Wallhaven } from "./widgets/wallhaven.js"
 import { Workspaces } from "./widgets/workspaces.js"
 import { SystemTray } from "./widgets/systemtray.js"
 
@@ -24,6 +25,7 @@ function Right() {
         hpack: "end",
         spacing: 2,
         children: [
+            Wallhaven(),
             SystemTray(),
             Clock(),
         ],

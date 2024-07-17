@@ -41,6 +41,9 @@ in {
       trash-cli
       waybar
 
+      ripgrep
+      fd
+
       swaynotificationcenter
       networkmanagerapplet
       grim

@@ -1,0 +1,20 @@
+@import '/home/dave/.cache/wal/colors-waybar.css';
+
+@define-color bg alpha(@background, 0.6);
+@define-color fg @foreground;
+@define-color alt @color4;
+
+
+window > box {
+    margin: 0px 0px 0px 0px;
+}
+
+.lesimage {
+    min-width: 300px;
+    min-height: 200px;
+}
+
+levelbar block,
+highlight {
+    min-height: 10px;
+}

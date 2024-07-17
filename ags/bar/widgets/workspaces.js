@@ -1,7 +1,7 @@
 import * as utils from "../utils.js"
 const hyprland = await Service.import("hyprland")
 
-// const workspaceRename = Array.from({length: 30}, (_,i) => (i % 10).toSring())
+// const workspaceRename = Array.from({length: 30}, (_,i) => (i % 10).toString())
 
 function WorkspaceLabel(name) {
     return Widget.Label({
@@ -28,7 +28,7 @@ function WorkspaceIcons(id) {
 
 function WorkspaceClients(id, name) {
     return Widget.Box({
-        children: [Widget.Label({ label: "", className: "active-label"}), WorkspaceLabel(name), ...WorkspaceIcons(id)],
+        children: [WorkspaceLabel(name), ...WorkspaceIcons(id)],
     })
     .hook(hyprland, (self, eventName, data) => {
             switch(eventName) {

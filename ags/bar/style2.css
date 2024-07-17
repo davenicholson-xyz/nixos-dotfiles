@@ -1,6 +1,6 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.5);
+@define-color bg alpha(@background, 0.6);
 @define-color fg @foreground;
 @define-color alt @color4;
 
@@ -17,25 +17,32 @@ window > box {
     background: transparent;
     border-radius: 0px;
     border: none;
+    opacity: 0.4;
+    border-top: 4px solid transparent;
 }
 
-.workspace .active-label {
-    margin: 1px 10px 0px 0px;
-    font-size: 20px;
-    opacity: 0;
-}
-
-.workspace.active .active-label {
+.workspace.active {
     opacity: 1;
-    color: @alt;
+    border-top: 4px solid @alt;
 }
 
 .workspace-label {
     margin: 0px 10px 0px 0px;
+    font-weight: normal;
+}
+
+.workspace.active .workspace-label {
+    font-weight: bold;
+    color: @alt;
 }
 
 .workspace .app-icon {
     margin: 2px 6px 0px 0px;
+}
+
+.wallhaven {
+    background: transparent;
+    border: none;
 }
 
 .clock {
