@@ -1,8 +1,10 @@
-const hyprland = await Service.import("hyprland")
+import { Workspaces } from "./widgets/workspaces.js"
+
+// const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const systemtray = await Service.import("systemtray")
 
-const ICON_SIZE = 14
+const ICON_SIZE = 16
 
 const date = Variable("", {
     poll: [1000, 'date "+%b %e - %H:%M "'],
@@ -12,15 +14,15 @@ const date = Variable("", {
 // so to make a reuseable widget, make it a function
 // then you can simply instantiate one by calling it
 
-function Wallhaven() {
-    return Widget.Button({
-        child: Widget.Icon({ icon: 'google-chrome', size: ICON_SIZE }),
-        class_name: "wallhaven",
-        on_clicked: () => {
-            Utils.exec("/run/current-system/sw/bin/sh -c '/home/dave/.dotfiles/scripts/wallhaven -c wallpaper | /home/dave/.dotfiles/scripts/setwallpaper'")
-        },
-    })
-}
+// function Wallhaven() {
+//     return Widget.Button({
+//         child: Widget.Icon({ icon: 'google-chrome', size: ICON_SIZE }),
+//         class_name: "wallhaven",
+//         on_clicked: () => {
+//             Utils.exec("/run/current-system/sw/bin/sh -c '/home/dave/.dotfiles/scripts/wallhaven -c wallpaper | /home/dave/.dotfiles/scripts/setwallpaper'")
+//         },
+//     })
+// }
 
 const AppIcon = (c) => {
     return Widget.Icon({ icon: c.toLowerCase(), size: ICON_SIZE })
@@ -44,29 +46,28 @@ function workspaceIcons(ws, id) {
     return []
 }
 
-function Workspaces() {
-
-    const ch = Variable(appsToWorkspace(hyprland.clients))
-
-    const activeId = hyprland.active.workspace.bind("id")
-
-    const workspaces = hyprland.bind("workspaces")
-        .as(ws => ws.map(({ id }) => Widget.Button({
-            on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
-            child: Widget.Box({
-                children: workspaceIcons(ch.value, id)
-            }),
-            class_name: activeId.as(i => `${i === id ? "focused" : ""}`),
-        })))
-
-    return Widget.Box({
-        class_name: "workspaces",
-        children: workspaces,
-        setup: self => self.hook(hyprland, () => {
-            ch.value = appsToWorkspace(hyprland.clients)
-        }),
-    })
-}
+// function Workspaces() {
+//
+//     const ch = Variable(appsToWorkspace(hyprland.clients))
+//
+//     const activeId = hyprland.active.workspace.bind("id")
+//
+//     const workspaces = hyprland.bind("workspaces")
+//         .as(ws => ws.map(({ id }) => Widget.Button({
+//             on_clicked: () => hyprland.messageAsync(`dispatch workspace ${id}`),
+//             child: Widget.Box({
+//             children: workspaceIcons(ch.value, id),
+//             }),
+//             class_name: activeId.as(i => `${i === id ? "focused" : ""}`),
+//         })))
+//
+//     return Widget.Box({
+//         class_name: "workspaces",
+//         children: workspaces,
+//         setup: self => self.hook(hyprland, () => {
+//             ch.value = appsToWorkspace(hyprland.clients)
+//         }),
+//     })
 
 function Clock() {
     return Widget.Label({
@@ -138,7 +139,7 @@ function Right() {
         children: [
             // Volume(),
             // BatteryLabel(),
-            Wallhaven(),
+            // Wallhaven(),
             SysTray(),
             Clock(),
         ],
