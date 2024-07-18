@@ -151,9 +151,7 @@
       scummvm
 
       direnv
-      go
-      nodejs
-      gnumake
+      # qtwayland5
       ];
 
   programs.zsh.enable = true;

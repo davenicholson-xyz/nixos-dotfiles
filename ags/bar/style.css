@@ -5,7 +5,7 @@
 @define-color alt @color4;
 
 window.bar {
-    background-color: transparent;
+    background-color: @bg;
     color: white;
 }
 
@@ -14,38 +14,44 @@ window > box {
 }
 
 .workspace {
-    background: @bg;
-    border-radius: 10px;
-    margin: 0px 4px 0px 0px;
-    border: 2px solid @alt;
-    opacity: 0.6;
+    background: transparent;
+    border-radius: 0px;
+    border: none;
+    opacity: 0.4;
+    border-top: 4px solid transparent;
 }
 
 .workspace.active {
     opacity: 1;
+    border-top: 4px solid @alt;
 }
 
 .workspace-label {
-    font-weight: bold;
     margin: 0px 10px 0px 0px;
+    font-weight: normal;
+}
+
+.workspace.active .workspace-label {
+    font-weight: bold;
+    color: @alt;
 }
 
 .workspace .app-icon {
     margin: 2px 6px 0px 0px;
 }
 
+.wallhaven {
+    background: transparent;
+    border: none;
+}
+
 .clock {
-    background: @bg;
-    border-radius: 10px;
-    border: 2px solid @alt;
+    background: transparent;
     padding: 0px 10px 0px 10px;
-    font-weight: bold;
 }
 
 .systemtray {
-    background: @bg;
-    border-radius: 10px;
-    border: 2px solid @alt;
+    background: transparent;
     padding: 0px 8px 0px 8px;
     font-weight: bold;
 }

@@ -26,7 +26,6 @@ in {
 
   home.packages = with pkgs; [
       google-chrome
-      firefox
       cinnamon.nemo
       swww
       waypaper
@@ -54,10 +53,8 @@ in {
       catt
       zsh-history-substring-search
       eyedropper
-
-# Dev bits
-      nodePackages."live-server"
-      hugo
+      # nodePackages."live-server"
+      # hugo
 
 # Neovim required
       lua-language-server
@@ -115,6 +112,7 @@ in {
         "git"
         "history"
         "zoxide"
+        "direnv"
       ];
     };
   };
