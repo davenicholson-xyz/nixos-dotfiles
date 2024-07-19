@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "use flake \"github:the-nix-way/dev-templates?dir=$1\"" >> .envrc
+direnv allow

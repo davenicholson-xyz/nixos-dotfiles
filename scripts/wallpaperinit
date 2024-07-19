@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-swww kill > /dev/null 2> /dev/null &
-swww init

@@ -9,12 +9,13 @@ source $HOME/.dotfiles/.env
 
 CACHE_DIR="$HOME/.cache/wallhaven"
 PAGES=5
-CATEGORIES=111
-PURITY=110
-TOPRANGE=1M
+CATEGORIES=111   # general|anime|people
+PURITY=110       # sfw|sketchy|nsfw
+TOPRANGE=1M      # 1d|3d|1w|1M|3M\1y
+RATIOS=landscape # landscape|portrait|16x9|1x1 etc
+SETSCRIPT=$HOME/.dotfiles/scripts/setwallpaper
 
-Help() 
-{
+Help() {
   echo "Wallpaper switcher for wallhaven.cc"
   echo ""
   echo "Optional environmental variables:"
@@ -31,8 +32,10 @@ Help()
   echo " --hot                      set randomly from hot list (API required for NSFW)"
   echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
   echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
+  echo " --ratios <ratios>          ratio of wallpapers to return landscape|portrait|16x9|1x1 etc"
   echo " -r | --random <query>      random image with query (API required for NSFW)"
   echo " -i | --id <id>             set wallpaper by wallhaven id (API required for NSFW)"
+  echo " --no-set                   dont run set wallpaper script after fetch"
   echo " -l | --local               set wallpaper from random file in cache"
   echo " -f | --cached-file         get filepath of current wallpaper"
   echo " -u | --cached-url          get url of current wallpaper"
@@ -41,17 +44,16 @@ Help()
   echo ""
 }
 
-GetCollection()
-{
+GetCollection() {
 
   if ! [[ -v WALLHAVEN_USER ]]; then
     echo "Error: WALLHAVEN_USER has not been set"
-    exit 1;
+    exit 1
   fi
 
   if ! [[ -v WALLHAVEN_API ]]; then
     echo "Error: WALLHAVEN_API has not been set"
-    exit 1;
+    exit 1
   fi
 
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
@@ -60,11 +62,11 @@ GetCollection()
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
   PAGES=$(echo "$RESULT" | jq '.meta.last_page')
 
-  > $CACHE_DIR/images
+  >$CACHE_DIR/images
 
-  for ((i=1; i<=$PAGES; i++)); do
-      RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
-      echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  for ((i = 1; i <= $PAGES; i++)); do
+    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
   done
 
   if [[ -v PRECACHE ]]; then
@@ -76,65 +78,64 @@ GetCollection()
   SetWallpaper
 }
 
-GetPreCache()
-{
+GetPreCache() {
   while read p; do
     FILENAME=$(basename "$p")
     if [ -f "$CACHE_DIR/$FILENAME" ]; then
       continue
     fi
     curl -o "$CACHE_DIR/$(basename $p)" "$p"
-  done < $CACHE_DIR/images
+  done <$CACHE_DIR/images
   exit
 }
 
-GetToplist()
-{
-  > $CACHE_DIR/images
+GetToplist() {
+  >$CACHE_DIR/images
   SEED="$RANDOM"
-  for ((i=1; i<=$PAGES; i++)); do
+  for ((i = 1; i <= $PAGES; i++)); do
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=$TOPRANGE&page=$i&apikey=$WALLHAVEN_API")
-        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+      "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=$TOPRANGE&page=$i&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
   done
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
-GetHot()
-{
-  > $CACHE_DIR/images
+GetHot() {
+  >$CACHE_DIR/images
   SEED="$RANDOM"
-  for ((i=1; i<=$PAGES; i++)); do
+  for ((i = 1; i <= $PAGES; i++)); do
     RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?sorting=hot&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
-        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+      "https://wallhaven.cc/api/v1/search?sorting=hot&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
   done
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
-GetRandom()
-{
-  > $CACHE_DIR/images
+GetRandom() {
+  >$CACHE_DIR/images
   SEED="$RANDOM"
-    RESULT=$(curl -s -H "Content-Type:application/json" \
-        "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=landscape&apikey=$WALLHAVEN_API")
-        echo "$RESULT" | jq -r '.data[].path ' >> $CACHE_DIR/images
+  RESULT=$(curl -s -H "Content-Type:application/json" \
+    "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&apikey=$WALLHAVEN_API")
+  echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
-GetByID()
-{
-  > $CACHE_DIR/images
+GetByID() {
+  >$CACHE_DIR/images
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/w/$WID?apikey=$WALLHAVEN_API")
   SELECTED=$(echo "$RESULT" | jq -r '.data.path')
   SetWallpaper
 }
 
-SetWallpaper()
-{
+GetLastResult() {
+  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+  SetWallpaper
+}
+
+SetWallpaper() {
   FILENAME=$(basename "$SELECTED")
   EXT="${FILENAME##*.}"
 
@@ -145,86 +146,113 @@ SetWallpaper()
   CACHED="$CACHE_DIR/$FILENAME"
   WPID=$(echo $CACHED | cut -d"-" -f2 | cut -d"." -f1)
 
-  echo "https://wallhaven.cc/w/$WPID" > $CACHE_DIR/current
-  echo "$CACHED" >> $CACHE_DIR/current
+  echo "https://wallhaven.cc/w/$WPID" >$CACHE_DIR/current
+  echo "$CACHED" >>$CACHE_DIR/current
 
   if [ ! -f $CACHED ]; then
     curl -s -o "$CACHED" "$SELECTED"
-  fi 
+  fi
 
-  echo "$CACHED"
+  if [ -v SETSCRIPT ] && [ "$SETSCRIPT" != "" ] && ! [ -v NOSET ]; then
+    (${SETSCRIPT} ${CACHED})
+  else
+    echo "$CACHED"
+  fi
 }
 
-GetLocal()
-{
+GetLocal() {
   find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | shuf -n 1
-  exit 0;
+  exit 0
 }
 
-GetFilePath()
-{
+GetFilePath() {
   sed -n '2p' $CACHE_DIR/current
 }
 
-GetUrl()
-{
+GetUrl() {
   sed -n '1p' $CACHE_DIR/current
 }
 
-DeleteCache()
-{
+DeleteCache() {
   find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) -exec rm {} \;
 }
 
 while [[ "$1" != "" ]]; do
   case $1 in
-    -h | --help)
-      Help
-      exit;;
-    -c | --collection)
-      shift
-      COLLECTION=$1;;
-    --pre-cache)
-      PRECACHE=x;;
-    -t | --toplist)
-      TOPLIST=x;;
-    --range)
-      shift
-      TOPRANGE=$1;;
-    --hot)
-      HOT=x;;
-    --pages)
-      shift
-      PAGES=$1;;
-    -r | --random)
-      shift
-      QUERY=$(jq -rn --arg x "$1" '$x|@uri');;
-    -i | --id)
-      shift
-      WID=$1
-      GetByID
-      exit;;
-    -p | --purity)
-      shift
-      PURITY=$1;;
-    -k | --categories)
-      shift
-      CATEGORIES=$1;;
-    -l | --local)
-      GetLocal
-      exit;;
-    -f | --cached-file)
-      GetFilePath
-      exit;;
-    -u | --cached-url)
-      GetUrl
-      exit;;
-    -d | --delete-cache)
-      DeleteCache
-      exit;;
-    *)
-      Help
-      exit 1;;
+  -h | --help)
+    Help
+    exit
+    ;;
+  -c | --collection)
+    shift
+    COLLECTION=$1
+    ;;
+  --pre-cache)
+    PRECACHE=x
+    ;;
+  -t | --toplist)
+    TOPLIST=x
+    ;;
+  --range)
+    shift
+    TOPRANGE=$1
+    ;;
+  --hot)
+    HOT=x
+    ;;
+  --pages)
+    shift
+    PAGES=$1
+    ;;
+  -r | --random)
+    shift
+    QUERY=$(jq -rn --arg x "$1" '$x|@uri')
+    ;;
+  -i | --id)
+    shift
+    WID=$1
+    GetByID
+    exit
+    ;;
+  -p | --purity)
+    shift
+    PURITY=$1
+    ;;
+  --ratios)
+    shift
+    RATIOS=$1
+    ;;
+  -k | --categories)
+    shift
+    CATEGORIES=$1
+    ;;
+  -l | --local)
+    GetLocal
+    exit
+    ;;
+  --no-set)
+    NOSET=x
+    ;;
+  --last-result)
+    GetLastResult
+    exit
+    ;;
+  -f | --cached-file)
+    GetFilePath
+    exit
+    ;;
+  -u | --cached-url)
+    GetUrl
+    exit
+    ;;
+  -d | --delete-cache)
+    DeleteCache
+    exit
+    ;;
+  *)
+    Help
+    exit 1
+    ;;
   esac
   shift
 done

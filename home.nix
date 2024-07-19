@@ -137,7 +137,7 @@ in {
     enableZshIntegration = true;
   };
 
-  programs.zellij.enable = true;
+  # programs.zellij.enable = true;
 
   programs.neovim = {
     enable = true;
