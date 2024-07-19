@@ -14,6 +14,8 @@ window > box {
 }
 
 .workspace {
+    padding: 0px 0px 0px 0px;
+    margin: 0px 4px 0px 0px;
     background: transparent;
     border-radius: 0px;
     border: none;

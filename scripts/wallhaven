@@ -161,8 +161,8 @@ SetWallpaper() {
 }
 
 GetLocal() {
-  find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | shuf -n 1
-  exit 0
+  SELECTED=$(find $CACHE_DIR -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | shuf -n 1)
+  SetWallpaper
 }
 
 GetFilePath() {
