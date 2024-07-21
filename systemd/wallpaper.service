@@ -4,5 +4,5 @@ Description=Randomly change the wallpaper
 [Service]
 Type=oneshot
 EnvironmentFile=/home/dave/.dotfiles/.env
-ExecStart=/run/current-system/sw/bin/sh -c '/home/dave/.dotfiles/scripts/wallhaven -c wallpaper | /home/dave/.dotfiles/scripts/setwallpaper'
+ExecStart=/run/current-system/sw/bin/sh -c '/home/dave/.local/bin/wallhaven -c wallpaper | /home/dave/.local/bin/setwallpaper'
 

@@ -13,34 +13,36 @@ CATEGORIES=111   # general|anime|people
 PURITY=110       # sfw|sketchy|nsfw
 TOPRANGE=1M      # 1d|3d|1w|1M|3M\1y
 RATIOS=landscape # landscape|portrait|16x9|1x1 etc
-SETSCRIPT=$HOME/.dotfiles/scripts/setwallpaper
+SETSCRIPT=$HOME/.local/bin/setwallpaper
 
 Help() {
-  echo "Wallpaper switcher for wallhaven.cc"
+  echo "Wallpaper Switcher for wallhaven.cc"
   echo ""
-  echo "Optional environmental variables:"
-  echo "WALLHAVEN_API - API key from wallhaven.cc"
-  echo "WALLHAVEN_USER - wallhaven username"
+  echo "Environment Variables (Optional):"
+  echo "  WALLHAVEN_API    API key from wallhaven.cc"
+  echo "  WALLHAVEN_USER   wallhaven.cc username"
   echo ""
-  echo "Syntax: wallhaven [-options]"
-  echo "options:"
-  echo " -c | --collection <name>   collection name (API and username required)"
-  echo " --pre-cache                pre-download all wallpapers from chosen collection"
-  echo " -t | --toplist             set randomly from toplist (API required for NSFW)"
-  echo " --range <range>            set time range for toplist 1d|3d|1w|1M|3M|1y [default: $TOPRANGE]"
-  echo " --pages <num>              how many toplist pages to search from [default : $PAGES]"
-  echo " --hot                      set randomly from hot list (API required for NSFW)"
-  echo " -p | --purity <bits>       filter naughty stuff sfw|sketchy|nsfw [default : $PURITY]"
-  echo " -k | --categories <bits>   kategories general|anime|people [default: $CATEGORIES]"
-  echo " --ratios <ratios>          ratio of wallpapers to return landscape|portrait|16x9|1x1 etc"
-  echo " -r | --random <query>      random image with query (API required for NSFW)"
-  echo " -i | --id <id>             set wallpaper by wallhaven id (API required for NSFW)"
-  echo " --no-set                   dont run set wallpaper script after fetch"
-  echo " -l | --local               set wallpaper from random file in cache"
-  echo " -f | --cached-file         get filepath of current wallpaper"
-  echo " -u | --cached-url          get url of current wallpaper"
-  echo " -d | --delete-cache        delete cache"
-  echo " -h | --help                help menu"
+  echo "Usage: wallhaven [options]"
+  echo "Options:"
+  echo "  -c, --collection <name>   Specify the collection name (requires API key and username)"
+  echo "      --pre-cache           Pre-download all wallpapers from the chosen collection"
+  echo "      --no-update           Choose random wallpaper from cached result"
+  echo "  -t, --toplist             Set wallpaper randomly from the toplist (API key required for NSFW)"
+  echo "      --range <range>       Set time range for the toplist: 1d | 3d | 1w | 1M | 3M | 1y [default: $TOPRANGE]"
+  echo "      --pages <num>         Specify the number of toplist pages to search [default: $PAGES]"
+  echo "      --hot                 Set wallpaper randomly from the hot list (API key required for NSFW)"
+  echo "  -p, --purity <bits>       Filter content by purity: sfw | sketchy | nsfw [default: $PURITY]"
+  echo "  -k, --categories <bits>   Filter content by categories: general | anime | people [default: $CATEGORIES]"
+  echo "      --ratios <ratios>     Specify wallpaper aspect ratios: landscape | portrait | 16x9 | 1x1, etc."
+  echo "  -r, --random <query>      Get a random image with the specified query (API key required for NSFW)"
+  echo "  -i, --id <id>             Set wallpaper by wallhaven ID (API key required for NSFW)"
+  echo "      --no-set              Fetch wallpaper without setting it"
+  echo "  -l, --local               Set wallpaper from a random file in cache"
+  echo "      --last-result         Use the last random request result to save API calls"
+  echo "  -f, --cached-file         Display the file path of the current wallpaper"
+  echo "  -u, --cached-url          Display the URL of the current wallpaper"
+  echo "  -d, --delete-cache        Delete cached wallpapers"
+  echo "  -h, --help                Display this help menu"
   echo ""
 }
 
@@ -56,25 +58,30 @@ GetCollection() {
     exit 1
   fi
 
-  RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
-  COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION" '.data[] | select(.label == $LABEL) | .id')
+  touch -a $CACHE_DIR/$COLLECTION
 
-  RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
-  PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+  if ! [[ -v NOUPDATE ]]; then
 
-  >$CACHE_DIR/images
+    >$CACHE_DIR/$COLLECTION
 
-  for ((i = 1; i <= $PAGES; i++)); do
-    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
-    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
-  done
+    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections?apikey=$WALLHAVEN_API")
+    COLLECTION_ID=$(echo "$RESULT" | jq --arg LABEL "$COLLECTION" '.data[] | select(.label == $LABEL) | .id')
+
+    RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/$WALLHAVEN_USER/$COLLECTION_ID?apikey=$WALLHAVEN_API")
+    PAGES=$(echo "$RESULT" | jq '.meta.last_page')
+
+    for ((i = 1; i <= $PAGES; i++)); do
+      RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/collections/fatnic/$COLLECTION_ID?page=$i&apikey=$WALLHAVEN_API")
+      echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/$COLLECTION
+    done
+  fi
 
   if [[ -v PRECACHE ]]; then
     GetPreCache
     exit
   fi
 
-  SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
+  SELECTED=$(cat $CACHE_DIR/$COLLECTION | shuf -n 1)
   SetWallpaper
 }
 
@@ -85,46 +92,52 @@ GetPreCache() {
       continue
     fi
     curl -o "$CACHE_DIR/$(basename $p)" "$p"
-  done <$CACHE_DIR/images
+  done <$CACHE_DIR/$COLLECTION
   exit
 }
 
 GetToplist() {
-  >$CACHE_DIR/images
-  SEED="$RANDOM"
-  for ((i = 1; i <= $PAGES; i++)); do
-    RESULT=$(curl -s -H "Content-Type:application/json" \
-      "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=$TOPRANGE&page=$i&apikey=$WALLHAVEN_API")
-    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
-  done
+  if ! [[ -v NOUPDATE ]]; then
+    >$CACHE_DIR/images
+    SEED="$RANDOM"
+    for ((i = 1; i <= $PAGES; i++)); do
+      RESULT=$(curl -s -H "Content-Type:application/json" \
+        "https://wallhaven.cc/api/v1/search?sorting=toplist&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=$TOPRANGE&page=$i&apikey=$WALLHAVEN_API")
+      echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
+    done
+  fi
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
 GetHot() {
-  >$CACHE_DIR/images
-  SEED="$RANDOM"
-  for ((i = 1; i <= $PAGES; i++)); do
-    RESULT=$(curl -s -H "Content-Type:application/json" \
-      "https://wallhaven.cc/api/v1/search?sorting=hot&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
-    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
-  done
+  if ! [[ -v NOUPDATE ]]; then
+    >$CACHE_DIR/images
+    SEED="$RANDOM"
+    for ((i = 1; i <= $PAGES; i++)); do
+      RESULT=$(curl -s -H "Content-Type:application/json" \
+        "https://wallhaven.cc/api/v1/search?sorting=hot&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&topRange=1M&page=$i&apikey=$WALLHAVEN_API")
+      echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
+    done
+  fi
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
 GetRandom() {
-  >$CACHE_DIR/images
-  SEED="$RANDOM"
-  RESULT=$(curl -s -H "Content-Type:application/json" \
-    "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&apikey=$WALLHAVEN_API")
-  echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
+  if ! [[ -v NOUPDATE ]]; then
+    >$CACHE_DIR/images
+    SEED="$RANDOM"
+    RESULT=$(curl -s -H "Content-Type:application/json" \
+      "https://wallhaven.cc/api/v1/search?q=$QUERY&sorting=random&categories=$CATEGORIES&purity=$PURITY&seed=$SEED&ratios=$RATIOS&apikey=$WALLHAVEN_API")
+    echo "$RESULT" | jq -r '.data[].path ' >>$CACHE_DIR/images
+  fi
   SELECTED=$(cat $CACHE_DIR/images | shuf -n 1)
   SetWallpaper
 }
 
 GetByID() {
-  >$CACHE_DIR/images
+  # >$CACHE_DIR/images
   RESULT=$(curl -s -H "Content-Type:application/json" "https://wallhaven.cc/api/v1/w/$WID?apikey=$WALLHAVEN_API")
   SELECTED=$(echo "$RESULT" | jq -r '.data.path')
   SetWallpaper
@@ -189,6 +202,9 @@ while [[ "$1" != "" ]]; do
     ;;
   --pre-cache)
     PRECACHE=x
+    ;;
+  --no-update)
+    NOUPDATE=x
     ;;
   -t | --toplist)
     TOPLIST=x

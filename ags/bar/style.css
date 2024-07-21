@@ -1,6 +1,6 @@
 @import '/home/dave/.cache/wal/colors-waybar.css';
 
-@define-color bg alpha(@background, 0.6);
+@define-color bg alpha(@background, 0.5);
 @define-color fg @foreground;
 @define-color alt @color4;
 
@@ -18,7 +18,7 @@ window > box {
 }
 
 .workspace {
-    padding: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 6px;
     margin: 0px 4px 0px 0px;
     background: transparent;
     border-radius: 0px;

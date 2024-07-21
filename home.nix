@@ -68,9 +68,11 @@ in {
     ".config/fastfetch/config.jsonc".source = fastfetch/config.jsonc;
   };
 
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/nvim";
-  home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/hypr";
-  home.file.".config/systemd/user".source = config.lib.file.mkOutOfStoreSymlink "/home/dave/.dotfiles/systemd";
+  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/nvim";
+  home.file.".config/hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/hypr";
+  home.file.".config/systemd/user".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/systemd";
+
+  home.file.".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/scripts";
 
   xdg.configFile.wal = {
     source = ./wal;
@@ -84,7 +86,7 @@ in {
   };
 
   home.sessionPath = [
-    "/home/dave/.dotfiles/scripts"
+    "/home/dave/.local/bin"
   ];
 
   programs.direnv.enable = true;
