@@ -53,8 +53,8 @@ in {
       catt
       zsh-history-substring-search
       eyedropper
+      cool-retro-term
       # nodePackages."live-server"
-      # hugo
 
 # Neovim required
       lua-language-server
