@@ -150,7 +150,8 @@
       expressvpn
       scummvm
 
-      direnv
+      nodejs
+      nodePackages.typescript-language-server
       # qtwayland5
       ];
 
