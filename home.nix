@@ -39,10 +39,6 @@ in {
       lazygit
       trash-cli
       waybar
-
-      ripgrep
-      fd
-
       swaynotificationcenter
       networkmanagerapplet
       grim
@@ -51,10 +47,13 @@ in {
       vlc
       mpv
       catt
-      zsh-history-substring-search
+      # zsh-history-substring-search
       eyedropper
       cool-retro-term
-      # nodePackages."live-server"
+      scummvm
+      gruvbox-gtk-theme
+      adwaita-icon-theme	 
+      expressvpn
 
 # Neovim required
       lua-language-server
@@ -89,8 +88,6 @@ in {
     "/home/dave/.local/bin"
   ];
 
-  programs.direnv.enable = true;
-
   programs.git = {
     enable = true;
     userName = "Dave Nicholson";
@@ -117,6 +114,11 @@ in {
         "direnv"
       ];
     };
+  };
+
+  programs.direnv = {
+      enable = true;
+      # silent = true;
   };
 
   programs.ags = {

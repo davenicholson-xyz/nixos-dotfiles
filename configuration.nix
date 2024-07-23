@@ -130,7 +130,7 @@
 # List packages installed in system profile. To search, run:
 # $ nix search wget
   environment.systemPackages = with pkgs; [
-    unzip
+      unzip
       libnotify
       bash
       killall
@@ -145,14 +145,6 @@
       kitty
       foot
       btop
-      gruvbox-gtk-theme
-      adwaita-icon-theme	 
-      expressvpn
-      scummvm
-
-      nodejs
-      nodePackages.typescript-language-server
-      # qtwayland5
       ];
 
   programs.zsh.enable = true;
