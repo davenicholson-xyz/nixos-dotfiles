@@ -26,6 +26,7 @@ in {
 
   home.packages = with pkgs; [
       google-chrome
+      firefox
       cinnamon.nemo
       swww
       waypaper
@@ -38,19 +39,21 @@ in {
       pywal
       lazygit
       trash-cli
-      waybar
+      # waybar
       swaynotificationcenter
       networkmanagerapplet
       grim
       slurp
-      streamlink
-      vlc
+      # streamlink
+      # vlc
       mpv
-      catt
+      # catt
+      localsend
       # zsh-history-substring-search
       eyedropper
-      cool-retro-term
-      scummvm
+      # cool-retro-term
+      # spotify
+      # scummvm
       gruvbox-gtk-theme
       adwaita-icon-theme	 
       expressvpn

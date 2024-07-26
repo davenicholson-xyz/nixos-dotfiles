@@ -76,19 +76,18 @@
     enable = true;
     settings = rec {
       initial_session = {
-	# command = "Hyprland";
-	command = "/home/dave/.dotfiles/scripts/hyprlauncher";
-	user = "dave";
+        command = "/home/dave/.dotfiles/scripts/hyprlauncher";
+        user = "dave";
       };
       default_session = initial_session;
     };
   };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    systemd.setPath.enable = true;
-  };
+	 programs.hyprland = {
+	   enable = true;
+	   xwayland.enable = true;
+	   systemd.setPath.enable = true;
+	 };
 
 # programs.steam = {
 #   enable = true;
@@ -172,6 +171,7 @@
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 
     8080 # live-server
+    1313 # hugo
   ]; 
   networking.firewall.allowedUDPPorts = [ 
     5353 # catt
